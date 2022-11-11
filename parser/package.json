@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "@types/node": "^18.11.9"
+  },
+  "dependencies": {
+    "@xmldom/xmldom": "^0.8.6"
+  }
+}
