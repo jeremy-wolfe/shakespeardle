@@ -1,0 +1,20 @@
+#!/bin/bash
+
+cd  "$(dirname "$0")"
+DIR="$PWD"
+
+[ -d 'dist' ] && rm -rf dist
+mkdir -p dist/books
+
+cd "$DIR/parser"
+[ -d 'node_modules' ] || npm i
+[ -d 'dist' ] && rm -rf dist
+npx tsc && node dist
+
+cd "$DIR/client"
+[ -d 'node_modules' ] || npm i
+npx pug -P -o ../dist index.pug
+npx sass index.scss ../dist/index.css
+npx webpack
+
+echo 12345 > "$DIR/dist/day"
