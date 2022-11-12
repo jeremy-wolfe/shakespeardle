@@ -1,54 +1,22 @@
-import {Chance} from 'chance';
+import {Bookshelf} from 'bookshelf';
+import {Grid} from 'grid';
+import {Keyboard} from 'keyboard';
 
-export class Bookshelf {
-	private alphaBooks: string[];
-	private books: Book[];
-	public day: number;
+export class App {
+	public readonly bookshelf: Bookshelf = new Bookshelf();
+	public readonly grid: Grid = new Grid(this, 6);
+	public readonly keyboard: Keyboard = new Keyboard(this);
 
-	public async load(): Promise<void> {
-		const booksResponse = await fetch('/books/books.json');
-		const books = await booksResponse.json() as string[];
-		this.books = books.map((book) => new Book(this, book))
-
-		const day = await fetch('/day');
-		this.day = parseInt(await day.text());
+	constructor() {
+		window.addEventListener('load', () => {
+			this.load();
+		});
 	}
 
-	public get cycle(): number {
-		return this.day % this.books.length;
-	}
-
-	public get book(): Book {
-		return this.books[this.cycle];
+	private async load(): Promise<void> {
+		await this.bookshelf.load();
+		this.grid.load();
 	}
 }
 
-export class Book {
-	public title: string;
-	private alphaWords: string[];
-	private words: string[];
-
-	constructor(private readonly bookshelf: Bookshelf, private readonly name: string) {}
-
-	public async load(): Promise<void> {
-		const bookResponse = await fetch(`/books/${this.name}.json`);
-		const book = await bookResponse.json() as {title: string, words: string[]};
-		this.title = book.title;
-		this.alphaWords = book.words;
-
-		const chance = new Chance(this.cycle);
-		this.words = chance.shuffle(this.alphaWords);
-	}
-
-	public get day(): number {
-		return this.bookshelf.day % this.alphaWords.length;
-	}
-
-	public get cycle(): number {
-		return Math.floor(this.bookshelf.day / this.alphaWords.length);
-	}
-
-	public get word(): string {
-		return this.words[this.day];
-	}
-}
+new App();
