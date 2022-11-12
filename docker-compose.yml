@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  nginx:
+    container_name: ${COMPOSE_PROJECT_NAME}_nginx
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "${DOCKER_PORT}:80"
+    volumes:
+      - ./:/app:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
