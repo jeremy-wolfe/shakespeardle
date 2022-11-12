@@ -1,0 +1,48 @@
+@use 'color';
+
+@keyframes invalid {
+	0% {
+		color: color.$invalid;
+		transform: translateX(0);
+	}
+
+	5% {
+		color: color.$invalid;
+		transform: translateX(5px);
+	}
+
+	10% {
+		color: color.$invalid;
+		transform: translateX(-5px);
+	}
+
+	15% {
+		color: color.$invalid;
+		transform: translateX(5px);
+	}
+
+	20% {
+		color: color.$invalid;
+		transform: translateX(-5px);
+	}
+
+	25% {
+		color: color.$invalid;
+		transform: translateX(0);
+	}
+
+	100% {
+		color: color.$foreground;
+	}
+}
+
+@keyframes notify {
+	0% {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0px);
+	}
+}

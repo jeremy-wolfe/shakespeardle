@@ -1,0 +1,37 @@
+@media (max-width: 700px) {
+	:root {
+		--padding: 10px;
+	}
+	html, body {
+		font-size: 14px;
+	}
+	#container > aside {
+		left: 5px;
+		right: 5px;
+		width: auto;
+		margin-left: 0;
+	}
+}
+
+@media (max-width: 450px) {
+	#container > footer {
+		width: 100%;
+			
+		ul {
+			li {
+				&#enter {
+					grid-column-end: span 4;
+				}
+				&#backspace {
+					grid-column-end: span 2;
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 380px) {
+	html, body {
+		font-size: 12px;
+	}
+}

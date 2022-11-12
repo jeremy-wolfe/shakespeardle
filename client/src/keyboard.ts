@@ -9,8 +9,26 @@ export class Keyboard {
 		new BackspaceKey(this)
 	];
 
+	private readonly keypress = (event: KeyboardEvent) => {
+		const keyPressed = event.key.toLowerCase();
+		switch (keyPressed) {
+			case 'enter':
+			case 'backspace':
+				this.keys.find((key) => key.element.id === keyPressed).press();
+				break;
+
+			default:
+				this.keys.find((key) => key.value.toLowerCase() === keyPressed)?.press();
+		}
+	};
+
 	constructor(public readonly app: App) {
 		document.querySelector('footer').append(this.element);
+		document.addEventListener('keydown', this.keypress);
+	}
+
+	public end(): void {
+		document.removeEventListener('keydown', this.keypress);
 	}
 
 	public getKey(value: string): CharacterKey {
@@ -21,23 +39,23 @@ export class Keyboard {
 
 abstract class Key {
 	public readonly element: HTMLLIElement = document.createElement('li');
-	protected readonly click = () => this.press();
-	protected abstract press(): void;
+	public abstract press(): void;
 
 	constructor(protected readonly keyboard: Keyboard, public readonly value: string) {
 		this.keyboard.element.append(this.element);
 		this.element.innerHTML = this.value;
-		this.element.addEventListener('click', this.click);
+		this.element.addEventListener('click', () => {
+			this.press();
+		});
 	}
 }
 
 class CharacterKey extends Key {
-	protected press(): void {
+	public press(): void {
 		this.keyboard.app.grid.key(this.value);
 	}
 
 	public disable(): void {
-		this.element.removeEventListener('click', this.click);
 		this.element.classList.add('disabled');
 	}
 }
@@ -48,7 +66,7 @@ class EnterKey extends Key {
 		this.element.id = 'enter';
 	}
 
-	protected press(): void {
+	public press(): void {
 		this.keyboard.app.grid.submit();
 	}
 }
@@ -59,7 +77,7 @@ class BackspaceKey extends Key {
 		this.element.id = 'backspace';
 	}
 
-	protected press(): void {
+	public press(): void {
 		this.keyboard.app.grid.backspace();
 	}
 }
