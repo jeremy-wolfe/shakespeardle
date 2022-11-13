@@ -1,7 +1,7 @@
 @use 'color';
 @use 'animation';
 
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lato:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lato:ital,wght@0,300;0,400;1,300&display=swap');
 
 $padding: var(--padding);
 
@@ -34,6 +34,7 @@ body {
 
 #container > header {
 	padding: $padding;
+	text-align: center;
 }
 
 main {
@@ -78,17 +79,23 @@ main {
 }
 
 #container > footer {
+	flex: 0 1 200px;
+	display: flex;
+	flex-direction: column;
 	padding: $padding;
 	box-sizing: border-box;
 
 	ul {
+		flex: 1 1 auto;
 		grid-template-columns: repeat(20, 1fr);
 
 		li {
 			grid-column-end: span 2;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			padding: 0 0.5em;
-			height: 3em;
-			line-height: 3em;
+			min-height: 3em;
 			text-align: center;
 			font-weight: 400;
 			background: color.$grayLight;
@@ -119,7 +126,7 @@ main {
 	margin-left: -300px;
 	width: 600px;
 	bottom: 0;
-	padding: 30px;
+	padding: $padding;
 	background: color.$grayMid;
 	text-align: center;
 	box-sizing: border-box;
@@ -149,11 +156,22 @@ main {
 		}
 	}
 	footer {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: center;
 		padding: $padding;
+
+		> div {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: center;
+			padding-bottom: $padding;
+		}
+		small {
+			display: block;
+			font-size: 0.8rem;
+			line-height: 1.25em;
+			margin-top: 10px;
+			color: color.$foreground;
+		}
 	}
 }
 
@@ -170,11 +188,21 @@ main {
 	transition: opacity 500ms, transform 0ms 500ms;
 	z-index: 9;
 
-	aside.show + & {
+	aside.show + &, #loading + & {
 		opacity: 0.5;
 		transform: translateY(0%);
 		transition: opacity 500ms, transform 0ms;
 	}
+}
+
+#loading {
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	width: 100px;
+	height: 100px;
+	margin: -50px 0 0 -50px;
+	z-index: 12;
 }
 
 h1, h2 {
@@ -192,14 +220,22 @@ h2 {
 	font-size: 1.75rem;
 }
 
+p {
+	margin: 0 0 0.5em;
+}
+
 b {
 	font-weight: 400;
 }
 
 a {
 	font-weight: 400;
-	color: color.$foreground;
+	color: color.$link;
 	text-decoration: none;
+
+	&:hover {
+		color: color.$grayLight;
+	}
 }
 
 ul {
@@ -254,6 +290,10 @@ ul {
 	}
 }
 
+img {
+	display: block;
+}
+
 .btn {
 	display: inline-flex;
 	flex-direction: row;
@@ -265,9 +305,10 @@ ul {
 	line-height: 50px;
 	border-radius: 25px;
 	font-weight: 400;
+	color: color.$foreground;
 	cursor: pointer;
 
-	svg {
+	svg, img {
 		width: auto;
 		height: 1.25em;
 		margin-right: 10px;
