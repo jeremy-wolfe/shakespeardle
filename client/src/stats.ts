@@ -19,7 +19,7 @@ export class Stats {
 		this.recalculate();
 	}
 
-	private recalculate(): void {
+	public recalculate(): void {
 		this.accuracy = Math.round(this.wins / this.played * 100 || 0) + '%';
 		this.streaks = [];
 		this.streaks.push(this.data.reduce((streak, stat) => {

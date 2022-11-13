@@ -35,7 +35,7 @@ export class App {
 	public share(): void {
 		if (!this.isComplete) return;
 		const text = `Shakespeardle #${this.bookshelf.day - 19309} `
-			+ ` ${this.grid.guesses} / ${this.grid.tries}\n`
+			+ ` ${this.isWin ? this.grid.guesses : 'X'} / ${this.grid.tries}\n`
 			+ `${this.bookshelf.word.book.title}\n\n`
 			+ `${this.grid.tileMapString}\n\n`
 			+ 'https://shakespeardle.com';
@@ -57,6 +57,7 @@ export class App {
 		const stateJson = localStorage.getItem(`day${this.bookshelf.day}`);
 		const state = stateJson && JSON.parse(stateJson);
 		if (state) this.grid.state = state;
+		this.stats.recalculate();
 		document.getElementById('loading').remove();
 	}
 

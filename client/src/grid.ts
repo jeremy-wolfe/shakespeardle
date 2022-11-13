@@ -248,7 +248,7 @@ class Emoji {
 		this.letter = this.element.textContent;
 		this.element.innerHTML = '&#x1f7e9;';
 		this.position = this.element.textContent;
-		this.element.innerHTML = '&#x281c;';
+		this.element.innerHTML = '&#x2B1c;';
 		this.none = this.element.textContent;
 	}
 }
