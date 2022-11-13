@@ -5,9 +5,10 @@ import {basename, dirname} from 'path';
 class Parser {
 	public readonly rootPath: string = dirname(dirname(__dirname));
 	public readonly srcPath: string = this.rootPath + '/books';
-	public readonly distPath: string = this.rootPath + '/dist/books';
+	public readonly distPath: string = this.rootPath + '/dist';
 	public readonly parser: DOMParser = new DOMParser();
 	public readonly books: Book[] = [];
+	public readonly words: Map<string, Word> = new Map();
 
 	public async parse(): Promise<void> {
 		for (const file of await readdir(this.srcPath)) {
@@ -15,7 +16,28 @@ class Parser {
 			this.books.push(new Book(this, file));
 		}
 		await Promise.all(this.books.map((book) => book.parse()));
-		await writeFile(`${this.distPath}/books.json`, JSON.stringify(this.books.map((book) => book.index)));
+		await writeFile(`${this.distPath}/books.json`, JSON.stringify({
+			books: this.books.map((book) => book.index),
+			words: Array.from(this.words.values()).map((word) => word.data)
+		}));
+	}
+}
+
+class Word {
+	private readonly books: Set<Book> = new Set();
+	private count: number = 1;
+
+	constructor(public readonly word: string, book: Book) {
+		this.books.add(book);
+	}
+
+	public add(book: Book): void {
+		this.books.add(book);
+		this.count++;
+	}
+
+	public get data(): {word: string, books: string[]} {
+		return {word: this.word, books: Array.from(this.books).map((book) => book.name)};
 	}
 }
 
@@ -25,7 +47,6 @@ class Book {
 	private document?: XMLDocument;
 	private speechElements?: Element[];
 	private allWordElements: Element[] = [];
-	public readonly allWords: Map<string, number> = new Map();
 
 	constructor(private readonly parser: Parser, public readonly file: string) {
 		this.name = basename(file, '.xml');
@@ -42,25 +63,10 @@ class Book {
 		})
 		this.allWordElements.forEach((element) => {
 			const word = element.textContent?.toUpperCase().trim();
-			if (word) this.allWords.set(word, (this.allWords.get(word) || 0) + 1);
+			if (!word || /[^A-Z]/.test(word) || word.length !== 5) return;
+			this.parser.words.has(word) ? this.parser.words.get(word)?.add(this) : this.parser.words.set(word, new Word(word, this));
 		});
-		await this.write();
 	}
-
-	private async write(): Promise<void> {
-		const {title, words} = this;
-		await writeFile(
-			`${this.parser.distPath}/${this.name}.json`,
-			JSON.stringify({title, words})
-		);
-	}
-
-	public get words(): string[] {
-		return Array
-			.from(this.allWords.keys())
-			.filter((word) => !/[^A-Z]/.test(word) && word.length === 5)
-			.sort((wordA, wordB) => wordA.localeCompare(wordB));
-	};
 
 	public get index(): {name: string, title: string} {
 		const {name, title} = this;

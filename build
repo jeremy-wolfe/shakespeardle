@@ -14,7 +14,10 @@ npx tsc && node dist
 cd "$DIR/client"
 [ -d 'node_modules' ] || npm i
 npx pug -P -o ../dist index.pug
-npx sass index.scss ../dist/index.css
+npx sass scss/index.scss ../dist/index.css
 npx webpack
+
+cd "$DIR"
+cp -r assets dist/
 
 echo 12345 > "$DIR/dist/day"
