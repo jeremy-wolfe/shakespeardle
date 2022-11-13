@@ -6,9 +6,9 @@ import {Stats} from 'stats';
 
 export class App {
 	public readonly notify: Notify = new Notify();
-	public readonly bookshelf: Bookshelf = new Bookshelf();
 	public readonly grid: Grid = new Grid(this, 6);
 	public readonly keyboard: Keyboard = new Keyboard(this);
+	public bookshelf?: Bookshelf;
 	public stats: Stats;
 	public isWin?: boolean;
 	public isLoss?: boolean;
@@ -36,7 +36,7 @@ export class App {
 		if (!this.isComplete) return;
 		const text = `Shakespeardle #${this.bookshelf.day - 19309} `
 			+ ` ${this.grid.guesses} / ${this.grid.tries}\n`
-			+ `${this.bookshelf.book.title}\n\n`
+			+ `${this.bookshelf.word.book.title}\n\n`
 			+ `${this.grid.tileMapString}\n\n`
 			+ 'https://shakespeardle.com';
 		
@@ -52,11 +52,12 @@ export class App {
 	}
 
 	private async load(): Promise<void> {
-		await this.bookshelf.load();
+		this.bookshelf = await Bookshelf.load();
 		this.grid.load();
 		const stateJson = localStorage.getItem(`day${this.bookshelf.day}`);
 		const state = stateJson && JSON.parse(stateJson);
 		if (state) this.grid.state = state;
+		document.getElementById('loading').remove();
 	}
 
 	public get isComplete(): boolean {

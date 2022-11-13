@@ -84,7 +84,7 @@ export class Grid {
 	}
 
 	public get word(): string {
-		return this.app.bookshelf.book.word;
+		return this.app.bookshelf.word.word;
 	}
 
 	public get activeRow(): Row {
