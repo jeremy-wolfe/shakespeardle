@@ -15,10 +15,10 @@ class Parser {
 			if (!file.endsWith('.xml')) continue;
 			this.books.push(new Book(this, file));
 		}
-		await Promise.all(this.books.map((book) => book.parse()));
+		await Promise.all(this.books.sort((a, b) => a.name.localeCompare(b.name)).map((book) => book.parse()));
 		await writeFile(`${this.distPath}/books.json`, JSON.stringify({
 			books: this.books.map((book) => book.index),
-			words: Array.from(this.words.values()).map((word) => word.data)
+			words: Array.from(this.words.values()).map((word) => word.data).sort((a, b) => a.word.localeCompare(b.word))
 		}));
 	}
 }
@@ -37,7 +37,7 @@ class Word {
 	}
 
 	public get data(): {word: string, books: string[]} {
-		return {word: this.word, books: Array.from(this.books).map((book) => book.name)};
+		return {word: this.word, books: Array.from(this.books).map((book) => book.name).sort((a, b) => a.localeCompare(b))};
 	}
 }
 

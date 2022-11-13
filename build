@@ -19,5 +19,3 @@ npx webpack
 
 cd "$DIR"
 cp -r assets dist/
-
-echo 12345 > "$DIR/dist/day"
