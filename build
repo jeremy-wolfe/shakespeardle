@@ -4,7 +4,7 @@ cd  "$(dirname "$0")"
 DIR="$PWD"
 
 [ -d 'dist' ] && rm -rf dist
-mkdir -p dist/books
+mkdir dist
 
 cd "$DIR/parser"
 [ -d 'node_modules' ] || npm i
