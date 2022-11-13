@@ -1,0 +1,19 @@
+<svg version="1.1" viewBox="0 0 114 114" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<defs>
+		<mask id="loading-mask" maskUnits="userSpaceOnUse">
+			<circle cx="57" cy="57" r="50" style="fill:#fff"/>
+		</mask>
+		<linearGradient id="loading-gradient" x1="35" x2="60" y1="25" y2="75" gradientUnits="userSpaceOnUse">
+			<stop style="stop-color:#fff;stop-opacity:.4" offset="0"/>
+			<stop style="stop-color:#fff;stop-opacity:0" offset="1"/>
+		</linearGradient>
+		<style>@keyframes loading {0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);}}</style>
+	</defs>
+	<g mask="url(#loading-mask)" style="animation:loading 1s infinite linear;transform-origin:50%">
+		<rect x="9" y="9" width="96" height="96" style="fill:#b3b3b3"/>
+		<rect x="57" y="9" width="48" height="48" style="fill:#aa2"/>
+		<rect x="9" y="57" width="48" height="48" style="fill:#094"/>
+	</g>
+	<circle cx="57" cy="57" r="50" style="fill:none;stroke-width:6;stroke:#ccc"/>
+	<circle cx="57" cy="57" r="40" style="fill:url(#loading-gradient)"/>
+</svg>
