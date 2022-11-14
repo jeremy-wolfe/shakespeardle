@@ -2,7 +2,7 @@ export default {
 	async fetch() {
 		const epoch = new Date(0);
 		const today = new Date();
-		today.setHours(5);
+		today.setHours(today.getDate() - 5);
 	
 		const response = new Response(
 			Math.floor((today.valueOf() - epoch.valueOf()) / 1000 / 60 / 60 / 24).toString()

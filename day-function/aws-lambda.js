@@ -1,7 +1,7 @@
 exports.handler = async () => {
 	const epoch = new Date(0);
 	const today = new Date();
-	today.setHours(5);
+	today.setHours(today.getDate() - 5);
 
     const response = {
 		headers: {'Content-Type': 'text/plain'},
