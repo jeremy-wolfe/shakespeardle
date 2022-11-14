@@ -27,7 +27,7 @@ export class Stats {
 			if (streak) this.streaks.push(streak);
 			return 0;
 		}, 0));
-		this.currentStreak = this.streaks[this.data.length - 1] || 0;
+		this.currentStreak = this.streaks[this.streaks.length - 1] || 0;
 		this.longestStreak = Math.max(...this.streaks) || 0;
 		this.elements.update();
 	}
