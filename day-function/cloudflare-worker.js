@@ -1,8 +1,6 @@
 export default {
 	async fetch() {
 		const epoch = new Date(0);
-		epoch.setHours(-5);
-	
 		const today = new Date();
 		today.setHours(-5);
 	

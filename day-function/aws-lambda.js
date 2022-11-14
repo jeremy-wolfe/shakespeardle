@@ -1,8 +1,5 @@
 exports.handler = async () => {
-
 	const epoch = new Date(0);
-	epoch.setHours(-5);
-
 	const today = new Date();
 	today.setHours(-5);
 
