@@ -50,7 +50,7 @@ abstract class Key {
 	}
 }
 
-class CharacterKey extends Key {
+export class CharacterKey extends Key {
 	public press(): void {
 		this.keyboard.app.grid.key(this.value);
 	}

@@ -1,4 +1,5 @@
 import {App} from 'index';
+import {CharacterKey} from 'keyboard';
 
 type ValidType = 'letter' | 'position' | null;
 
@@ -76,7 +77,10 @@ export class Grid {
 	}
 
 	public get tileMap(): ValidType[][] {
-		return this.rows.filter((row) => row.isComplete).map((row) => row.tiles.map((tile) => tile.isValid));
+		return this.rows.filter((row) => row.isComplete).map((row) => row.tiles.map((tile) => {
+			if (tile.isValidPosition) return 'position';
+			if (tile.isValidLetter) return 'letter';
+		}));
 	}
 
 	public get tileMapString(): string {
@@ -133,7 +137,7 @@ class Row extends Segment {
 	constructor(public readonly grid: Grid) {
 		super();
 		this.grid.element.append(this.element);
-		while (this.tiles.push(new Tile(this)) < this.grid.word.length);
+		while (this.tiles.push(new Tile(this, this.tiles.length)) < this.grid.word.length);
 		this.grid.tiles.push(...this.tiles);
 	}
 
@@ -150,7 +154,8 @@ class Row extends Segment {
 		if (!app.bookshelf.has(guess)) return this.invalid();
 		this._isComplete = true;
 		this.element.classList.add('complete');
-		for (const tile of this.tiles) tile.validate();
+		for (const tile of this.tiles) tile.validatePosition();
+		for (const tile of this.tiles) tile.validateLetter();
 		if (guess === word) {
 			app.isWin = true;
 			app.isLoss = false;
@@ -187,28 +192,44 @@ class Row extends Segment {
 
 class Tile extends Segment {
 	public readonly element: HTMLLIElement = document.createElement('li');
-	public isValid: ValidType;
-	private index: number;
+	public isValidPosition: boolean = false;
+	public isValidLetter: boolean = false;
 	private _value: string = '';
 
-	constructor(public readonly row: Row) {
+	constructor(public readonly row: Row, private readonly index: number) {
 		super();
 		this.row.element.append(this.element);
 	}
 
-	public validate(): void {
-		const {grid, tiles} = this.row;
-		const key = this.row.grid.app.keyboard.getKey(this.value);
+	public validatePosition(): void {
+		if (!this.inWord) return this.key.disable();
+		if (this.row.grid.word[this.index] !== this.value) return;
+		this.isValidPosition = true;
+		this.isValidLetter = true;
+		for (const {element} of [this, this.key]) element.classList.add('valid-position');
+	}
 
-		if (!grid.word.includes(this.value)) return key.disable();
-		
-		this.isValid = grid.word[tiles.indexOf(this)] === this.value ? 'position' : 'letter';
+	public validateLetter(): void {
+		if (!this.inWord) return;
+		if (this.occurrencesMarked >= this.occurrences) return;
+		this.isValidLetter = true;
+		for (const {element} of [this, this.key]) element.classList.add('valid-letter');
+	}
 
-		for (const {element} of [this, key]) {
-			for (const property of ['position', 'letter']) {
-				element.classList.toggle(`valid-${property}`, property === this.isValid);
-			}
-		}
+	private get inWord(): boolean {
+		return this.row.grid.word.includes(this.value);
+	}
+
+	private get occurrences(): number {
+		return this.row.grid.word.split(this.value).length - 1;
+	}
+
+	private get occurrencesMarked(): number {
+		return this.row.tiles.filter((tile) => tile.value === this.value && tile.isValidLetter).length;
+	}
+
+	private get key(): CharacterKey {
+		return this.row.grid.app.keyboard.getKey(this.value);
 	}
 
 	public get value(): string {
