@@ -5,6 +5,7 @@ import {Notify} from 'notify';
 import {Stats} from 'stats';
 
 export class App {
+	private readonly epoch: number = 19309;
 	public readonly notify: Notify = new Notify();
 	public readonly grid: Grid = new Grid(this, 6);
 	public readonly keyboard: Keyboard = new Keyboard(this);
@@ -34,7 +35,7 @@ export class App {
 
 	public share(): void {
 		if (!this.isComplete) return;
-		const text = `Shakespeardle #${this.bookshelf.day - 19309} `
+		const text = `Shakespeardle #${this.bookshelf.day - this.epoch} `
 			+ ` ${this.isWin ? this.grid.guesses : 'X'} / ${this.grid.tries}\n`
 			+ `${this.bookshelf.word.book.title}\n\n`
 			+ `${this.grid.tileMapString}\n\n`

@@ -78,10 +78,12 @@ class StatElements {
 
 	public show(): void {
 		this.main.classList.add('show');
+		this.shade.classList.add('show');
 	}
 
 	public hide(): void {
 		this.main.classList.remove('show');
+		this.shade.classList.remove('show');
 	}
 
 	public update(): void {

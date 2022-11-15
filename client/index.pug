@@ -9,38 +9,55 @@ html
 		link(rel='icon' href='/assets/icon.svg')
 		link(rel='apple-touch-icon' href='/assets/apple-touch-icon.png')
 		link(rel='stylesheet' href='/index.css')
+		style.
+			body {
+				background: #111;
+			}
+			#container {
+				display: none;
+			}
+			#loading {
+				position: fixed;
+				left: 50%;
+				top: 50%;
+				width: 100px;
+				height: 100px;
+				margin: -50px 0 0 -50px;
+				z-index: 12;
+			}
 	
-	body: #container
-		header
-			#stats-btn: svg(viewBox='0 0 100 100'): path(d='M20,100 L20,60 M50,100 L50,0 M80,100 L80,40')
-			h1 Shakespeardle
-		main
-		footer
-		aside
-			.close: svg(viewBox='0 0 40 40'): path(d='M0,0 L40,40 M0,40 L40,0')
-			h2 Statistics
-			ul
-				li #[b] played
-				li #[b] won
-				li #[b] streak
-				li #[b] best streak
+	body
+		#container
+			header
+				#stats-btn: svg(viewBox='0 0 100 100'): path(d='M20,100 L20,60 M50,100 L50,0 M80,100 L80,40')
+				h1 Shakespear#[span dl]e
+			main
 			footer
-				div
-					a.btn.github(href='https://github.com/CaptainVascular/shakespeardle' target='_blank')
-						img(src='/assets/github.svg')
-						| GitHub
-					.btn.share
-						svg(viewBox='0 0 100 100')
-							path(d='M90,20 L10,50 L90,80')
-							circle(cx='20' cy='50' r='20')
-							circle(cx='80' cy='20' r='20')
-							circle(cx='80' cy='80' r='20')
-						| Share
-				small.
-					This project is licensed under the terms of the 
-					#[a(href='https://github.com/CaptainVascular/shakespeardle/blob/main/LICENSE.txt' target='_blank') Mozilla Public License 2.0]. 
-					Concept and rules based on #[a(href='https://www.nytimes.com/games/wordle/index.html' target='_blank') Wordle]. 
-					Word list compiled from #[i Shakespeare’s Plays, Sonnets and Poems] from 
-					#[a(href='https://shakespeare.folger.edu/' target='_blank') The Folger Shakespeare].
+			aside
+				.close: svg(viewBox='0 0 40 40'): path(d='M0,0 L40,40 M0,40 L40,0')
+				h2 Statistics
+				ul
+					li #[b] played
+					li #[b] won
+					li #[b] streak
+					li #[b] best streak
+				footer
+					div
+						a.btn.github(href='https://github.com/CaptainVascular/shakespeardle' target='_blank')
+							img(src='/assets/github.svg')
+							| GitHub
+						.btn.share
+							svg(viewBox='0 0 100 100')
+								path(d='M90,20 L10,50 L90,80')
+								circle(cx='20' cy='50' r='20')
+								circle(cx='80' cy='20' r='20')
+								circle(cx='80' cy='80' r='20')
+							| Share
+					small.
+						This project is licensed under the terms of the 
+						#[a(href='https://github.com/CaptainVascular/shakespeardle/blob/main/LICENSE.txt' target='_blank') Mozilla Public License 2.0]. 
+						Concept and rules based on #[a(href='https://www.nytimes.com/games/wordle/index.html' target='_blank') Wordle]. 
+						Word list compiled from #[i Shakespeare’s Plays, Sonnets and Poems] from 
+						#[a(href='https://shakespeare.folger.edu/' target='_blank') The Folger Shakespeare].
 		#loading: img(src='/assets/loading.svg' alt='Loading')
 		#shade
