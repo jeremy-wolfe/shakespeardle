@@ -13,11 +13,14 @@
 	}
 }
 
-@media (max-width: 450px) {
+@media (max-width: 550px) {
 	#container > footer {
 		width: 100%;
 		padding: $padding 2px;
-			
+	}
+}
+@media (max-width: 400px) {
+	#container > footer {
 		ul {
 			li {
 				&#enter {
