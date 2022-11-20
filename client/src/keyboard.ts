@@ -45,6 +45,7 @@ abstract class Key {
 		this.keyboard.element.append(this.element);
 		this.element.innerHTML = this.value;
 		this.element.addEventListener('click', () => {
+			navigator.vibrate?.(1);
 			this.press();
 		});
 	}

@@ -28,6 +28,7 @@ export class Row extends Segment {
 		this.animationEnd();
 		this.element.addEventListener('animationend', this.animationEnd);
 		this.element.classList.add('invalid');
+		navigator.vibrate?.([100, 100, 100, 100, 100]);
 	}
 
 	public submit(): void {
