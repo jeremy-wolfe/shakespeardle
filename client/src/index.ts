@@ -1,3 +1,4 @@
+import {Analytics} from 'analytics';
 import {Bookshelf} from 'bookshelf';
 import {Grid} from 'grid';
 import {Keyboard} from 'keyboard';
@@ -5,10 +6,12 @@ import {Notify} from 'notify';
 import {Stats} from 'stats';
 
 export class App {
-	private readonly epoch: number = 19309;
+	public readonly epoch: number = 19309;
 	public readonly notify: Notify = new Notify();
 	public readonly grid: Grid = new Grid(this, 6);
 	public readonly keyboard: Keyboard = new Keyboard(this);
+	public readonly analytics: Analytics = new Analytics(this);
+	public isLoaded?: boolean = false;
 	public bookshelf?: Bookshelf;
 	public stats: Stats;
 	public isWin?: boolean;
@@ -50,6 +53,7 @@ export class App {
 			navigator.clipboard.writeText(text);
 			this.notify.push('Copied to clipboard');
 		}
+		this.analytics.event('share');
 	}
 
 	private async load(): Promise<void> {
@@ -60,6 +64,7 @@ export class App {
 		if (state) this.grid.state = state;
 		this.stats.recalculate();
 		document.getElementById('loading').remove();
+		this.isLoaded = true;
 	}
 
 	public get isComplete(): boolean {

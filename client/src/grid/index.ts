@@ -60,6 +60,10 @@ export class Grid {
 		setTimeout(() => {
 			this.app.stats.show();
 		}, this.app.isWin ? 1000 : 3000);
+		if (this.app.isLoaded) this.app.analytics.event('level_end', {
+			level_name: `#${this.app.bookshelf.day - this.app.epoch}`,
+			success: this.app.isWin
+		});
 	}
 
 	public get state(): [string, boolean][] {
