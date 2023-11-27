@@ -1,4 +1,4 @@
-import {CharacterKey} from 'keyboard';
+import {CharacterKey} from 'keyboard/key';
 import {Row} from './row';
 import {Segment} from './segment';
 

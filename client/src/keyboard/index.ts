@@ -1,4 +1,6 @@
 import {Grid} from 'grid';
+import {Key, CharacterKey, EnterKey, BackspaceKey} from './key';
+import {keyClick} from './click';
 
 export class Keyboard {
 	public readonly element: HTMLUListElement = document.createElement('ul');
@@ -11,6 +13,7 @@ export class Keyboard {
 
 	private readonly keypress = (event: KeyboardEvent) => {
 		const keyPressed = event.key.toLowerCase();
+		keyClick();
 		switch (keyPressed) {
 			case 'enter':
 			case 'backspace':
@@ -41,51 +44,5 @@ export class Keyboard {
 	public getKey(value: string): CharacterKey {
 		const key = this.keys.find((key) => key.value === value);
 		if (key && key instanceof CharacterKey) return key;
-	}
-}
-
-abstract class Key {
-	public readonly element: HTMLLIElement = document.createElement('li');
-	public abstract press(): void;
-
-	constructor(protected readonly keyboard: Keyboard, public readonly value: string) {
-		this.keyboard.element.append(this.element);
-		this.element.innerHTML = this.value;
-		this.element.addEventListener('click', () => {
-			navigator.vibrate?.(1);
-			this.press();
-		});
-	}
-}
-
-export class CharacterKey extends Key {
-	public press(): void {
-		this.keyboard.grid.key(this.value);
-	}
-
-	public disable(): void {
-		this.element.classList.add('disabled');
-	}
-}
-
-class EnterKey extends Key {
-	constructor(keyboard: Keyboard) {
-		super(keyboard, 'ENTER');
-		this.element.id = 'enter';
-	}
-
-	public press(): void {
-		this.keyboard.grid.submit();
-	}
-}
-
-class BackspaceKey extends Key {
-	constructor(keyboard: Keyboard) {
-		super(keyboard, '&larr;');
-		this.element.id = 'backspace';
-	}
-
-	public press(): void {
-		this.keyboard.grid.backspace();
 	}
 }
