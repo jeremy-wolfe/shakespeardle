@@ -22,6 +22,7 @@ body {
 	color: color.$foreground;
 	font-family: 'Lato', sans-serif;
 	font-weight: 300;
+	user-select: none;
 }
 
 #container {
@@ -285,12 +286,21 @@ ul {
 	}
 }
 
-.close, #stats-btn {
+.close, #stats-btn, #random-btn, #daily-btn {
 	position: absolute;
-	right: 10px;
 	top: 10px;
 	padding: 10px;
 	cursor: pointer;
+	transition: opacity 500ms;
+
+	&.disabled {
+		pointer-events: none;
+		opacity: 0.25;
+	}
+}
+
+.close, #stats-btn {
+	right: 10px;
 
 	svg {
 		width: 20px;
@@ -304,6 +314,21 @@ ul {
 	svg {
 		stroke-width: 5px;
 	}
+}
+
+#random-btn, #daily-btn {
+	img {
+		width: 20px;
+		height: 20px;
+	}
+}
+
+#random-btn {
+	left: 10px;
+}
+
+#daily-btn {
+	left: 40px;
 }
 
 #stats-btn {

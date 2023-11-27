@@ -15,6 +15,7 @@ export class Bookshelf {
 	public readonly dayChance: Chance.Chance = new Chance(this.day);
 	public readonly books: Book[];
 	public readonly words: Word[];
+	public readonly randomWords: Word[];
 	public readonly cycleChance: Chance.Chance;
 	public readonly cycle: number;
 	public readonly cycleDay: number;
@@ -34,21 +35,21 @@ export class Bookshelf {
 		this.cycleChance = new Chance(this.cycle);
 		this.words = this.cycleChance.shuffle(this.alphaWords);
 		this.word = this.words[this.cycleDay];
-
-		const subtitle = document.createElement('p');
-		const bookName = document.createElement('i');
-		subtitle.innerText = 'Today’s word is found in ';
-		bookName.innerText = this.word.book.title;
-		subtitle.append(bookName);
-		document.querySelector('#container > header').append(subtitle);
+		const randomChance = new Chance(42);
+		this.randomWords = randomChance.shuffle(this.alphaWords);
 	}
 
 	public has(word: string): boolean {
 		return !!this.words.find((wordData) => wordData.word === word);
 	}
+
+	public get randomIndex(): number {
+		const chance = new Chance();
+		return chance.integer({min: 0, max: this.randomWords.length - 1});
+	}
 }
 
-class Word {
+export class Word {
 	public readonly word: string;
 	public readonly books: Book[];
 	public readonly book: Book;

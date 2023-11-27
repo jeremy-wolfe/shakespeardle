@@ -1,4 +1,4 @@
-import {App} from 'index';
+import {Grid} from 'grid';
 
 export class Keyboard {
 	public readonly element: HTMLUListElement = document.createElement('ul');
@@ -22,9 +22,16 @@ export class Keyboard {
 		}
 	};
 
-	constructor(public readonly app: App) {
-		document.querySelector('footer').append(this.element);
+	constructor(public readonly grid: Grid) {}
+
+	public attach(): void {
 		document.addEventListener('keydown', this.keypress);
+		document.querySelector('footer').append(this.element);
+	}
+
+	public detach(): void {
+		this.element.remove();
+		this.end();
 	}
 
 	public end(): void {
@@ -53,7 +60,7 @@ abstract class Key {
 
 export class CharacterKey extends Key {
 	public press(): void {
-		this.keyboard.app.grid.key(this.value);
+		this.keyboard.grid.key(this.value);
 	}
 
 	public disable(): void {
@@ -68,7 +75,7 @@ class EnterKey extends Key {
 	}
 
 	public press(): void {
-		this.keyboard.app.grid.submit();
+		this.keyboard.grid.submit();
 	}
 }
 
@@ -79,6 +86,6 @@ class BackspaceKey extends Key {
 	}
 
 	public press(): void {
-		this.keyboard.app.grid.backspace();
+		this.keyboard.grid.backspace();
 	}
 }

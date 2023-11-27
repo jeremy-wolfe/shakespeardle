@@ -16,7 +16,7 @@ export class Row extends Segment {
 	constructor(public readonly grid: Grid) {
 		super();
 		this.grid.element.append(this.element);
-		while (this.tiles.push(new Tile(this)) < this.grid.word.length);
+		while (this.tiles.push(new Tile(this)) < this.grid.word.word.length);
 		this.grid.tiles.push(...this.tiles);
 		setTimeout(() => {
 			this.element.classList.add('animate');
@@ -33,7 +33,8 @@ export class Row extends Segment {
 
 	public submit(): void {
 		const {guess} = this;
-		const {app, word, rows} = this.grid;
+		const {app, rows} = this.grid;
+		const {word} = this.grid.word;
 		if (guess.length < word.length) return;
 		if (!app.bookshelf.has(guess)) return this.invalid();
 		this._isComplete = true;

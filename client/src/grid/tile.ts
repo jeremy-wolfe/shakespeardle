@@ -28,7 +28,7 @@ export class Tile extends Segment {
 	public validatePosition(): void {
 		this.flipAnimation?.play();
 		if (!this.inWord) return this.key.disable();
-		if (this.row.grid.word[this.index] !== this.value) return;
+		if (this.word[this.index] !== this.value) return;
 		this.isValidPosition = true;
 		this.isValidLetter = true;
 		for (const {element} of [this, this.key]) element.classList.add('valid-position');
@@ -41,12 +41,16 @@ export class Tile extends Segment {
 		for (const {element} of [this, this.key]) element.classList.add('valid-letter');
 	}
 
+	private get word(): string {
+		return this.row.grid.word.word;
+	}
+
 	private get inWord(): boolean {
-		return this.row.grid.word.includes(this.value);
+		return this.word.includes(this.value);
 	}
 
 	private get occurrences(): number {
-		return this.row.grid.word.split(this.value).length - 1;
+		return this.word.split(this.value).length - 1;
 	}
 
 	private get occurrencesMarked(): number {
@@ -54,7 +58,7 @@ export class Tile extends Segment {
 	}
 
 	private get key(): CharacterKey {
-		return this.row.grid.app.keyboard.getKey(this.value);
+		return this.row.grid.keyboard.getKey(this.value);
 	}
 
 	public get value(): string {
