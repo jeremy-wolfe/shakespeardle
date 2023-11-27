@@ -7,13 +7,6 @@ export class Analytics {
 	constructor(private readonly app: App) {
 		this.script.async = true;
 		window.dataLayer = window.dataLayer || [];
-
-		if (!this.isEnabled) return;
-		this.script.src = 'https://www.googletagmanager.com/gtag/js?id=' + this.id;
-		document.head.append(this.script);
-
-		this.push('js', new Date());
-		this.push('config', this.id);
 	}
 
 	private readonly push: Gtag.Gtag = function(this: Analytics): void {
@@ -31,7 +24,16 @@ export class Analytics {
 		});
 	}
 
+	public load(): void {
+		if (!this.isEnabled) return;
+		this.script.src = 'https://www.googletagmanager.com/gtag/js?id=' + this.id;
+		document.head.append(this.script);
+
+		this.push('js', new Date());
+		this.push('config', this.id);
+	}
+
 	public get isEnabled(): boolean {
-		return /^(www\.)shakespeardle\.com$/.test(window.location.hostname);
+		return /^(www\.)?shakespeardle\.com$/.test(window.location.hostname);
 	}
 }
