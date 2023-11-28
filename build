@@ -6,22 +6,37 @@ DIR="$PWD"
 [ -d 'dist' ] && rm -rf dist
 mkdir dist
 
+echo 'Parser'
 cd "$DIR/parser"
 [ -d 'node_modules' ] || npm i
 [ -d 'dist' ] && rm -rf dist
 npx tsc && node dist
 
+echo
+echo 'CSS'
 cd "$DIR/client"
 [ -d 'node_modules' ] || npm i
-npx pug -P -o ../dist index.pug
 npx sass scss/index.scss ../dist/index.css
-npx webpack
 
+echo
+echo 'CSS Hash'
 cd "$DIR/dist"
 HASH="$(md5sum index.css | head -c 10)"
 mv index.css "index.${HASH}.css"
 mv index.css.map "index.${HASH}.css.map"
-perl -p -i -e "s/index\.css/index.${HASH}.css/g" index.html
 
+echo
+echo 'HTML'
+cd "$DIR/static-template"
+[ -d 'node_modules' ] || npm i
+npx tsc && node dist "$HASH" > "$DIR/dist/index.html"
+
+echo
+echo 'Webpack'
+cd "$DIR/client"
+npx webpack
+
+echo
+echo 'Assets'
 cd "$DIR"
 cp -r assets dist/

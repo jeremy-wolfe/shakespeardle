@@ -148,6 +148,11 @@ main {
 			&.disabled {
 				background: color.$grayDark;
 			}
+
+			svg {
+				width: 2em;
+				height: 1.5em;
+			}
 		}
 	}
 }
@@ -299,7 +304,7 @@ ul {
 	}
 }
 
-.close, #stats-btn {
+.close {
 	right: 10px;
 
 	svg {
@@ -316,10 +321,12 @@ ul {
 	}
 }
 
-#random-btn, #daily-btn {
-	img {
+#random-btn, #daily-btn, #stats-btn {
+	svg {
 		width: 20px;
 		height: 20px;
+		stroke: none;
+		fill: currentColor;
 	}
 }
 
@@ -332,9 +339,7 @@ ul {
 }
 
 #stats-btn {
-	svg {
-		stroke-width: 20px;
-	}
+	right: 10px;
 }
 
 img {
@@ -361,27 +366,24 @@ img {
 		margin-right: 10px;
 	}
 
+	svg {
+		fill: currentColor;
+		stroke: none;
+	}
+
 	&.github {
 		background: #000;
+		color: #fff;
 
-		svg {
-			fill: #fff;
-			stroke: none;
+		&:hover {
+			background: #222;
 		}
 	}
 	&.share {
 		background: color.$validPos;
 
-		svg {
-			path {
-				fill: none;
-				stroke: #fff;
-				stroke-width: 10px;
-			}
-			circle {
-				fill: #fff;
-				stroke: none;
-			}
+		&:hover {
+			background: lighten(color.$validPos, 2%);
 		}
 	}
 }

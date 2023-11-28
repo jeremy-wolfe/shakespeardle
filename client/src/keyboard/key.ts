@@ -28,7 +28,7 @@ export class CharacterKey extends Key {
 
 export class EnterKey extends Key {
 	constructor(keyboard: Keyboard) {
-		super(keyboard, 'ENTER');
+		super(keyboard, '<svg><use xlink:href="#icon-circle-check"></use></svg>');
 		this.element.id = 'enter';
 	}
 
@@ -39,7 +39,7 @@ export class EnterKey extends Key {
 
 export class BackspaceKey extends Key {
 	constructor(keyboard: Keyboard) {
-		super(keyboard, '&larr;');
+		super(keyboard, '<svg><use xlink:href="#icon-delete-left"></use></svg>');
 		this.element.id = 'backspace';
 	}
 

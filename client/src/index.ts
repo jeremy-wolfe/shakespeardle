@@ -5,6 +5,10 @@ import {RandomGrid} from 'grid/random';
 import {Notify} from 'notify';
 import {Stats} from 'stats';
 
+const windowLoad = new Promise((resolve) => {
+	window.addEventListener('load', resolve);
+});
+
 export class App {
 	public readonly epoch: number = 19309;
 	public readonly notify: Notify = new Notify();
@@ -64,9 +68,7 @@ export class App {
 	}
 
 	private async load(): Promise<void> {
-		await new Promise((resolve) => {
-			window.addEventListener('load', resolve);
-		});
+		await windowLoad;
 		this.activeGrid = this[localStorage.getItem('activeGrid') as 'grid' | 'randomGrid' || 'grid'] || this.grid;
 		this.analytics.load();
 		this.bookshelf = await Bookshelf.load();
