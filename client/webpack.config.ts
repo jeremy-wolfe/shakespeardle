@@ -1,12 +1,12 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const production = process.env.NODE_ENV === 'prod';
+import path from 'path';
+import HtmlWebpackPlugin from'html-webpack-plugin';
+import {WebpackConfiguration} from 'webpack-cli';
 
-module.exports = {
+const config: WebpackConfiguration = {
 	entry: './index.ts',
 	context: path.resolve(__dirname, 'src'),
 	devtool: 'source-map',
-	mode: production ? 'production' : 'development',
+	mode: 'production',
 	module: {
 		rules: [
 			{
@@ -22,14 +22,14 @@ module.exports = {
 	},
 	output: {
 		path: path.resolve(__dirname, '../dist'),
-		filename: production ? '[name].[chunkhash].bundle.js' : '[name].[hash].bundle.js',
-		sourceMapFilename: production ? '[name].[chunkhash].bundle.map' : '[name].[hash].bundle.map',
-		chunkFilename: production ? '[name].[chunkhash].chunk.js' : '[name].[hash].chunk.js'
+		filename: '[name].[chunkhash].bundle.js',
+		sourceMapFilename: '[name].[chunkhash].bundle.map',
+		chunkFilename: '[name].[chunkhash].chunk.js'
 	},
 	optimization: {
 		concatenateModules: false,
 		runtimeChunk: true,
-		moduleIds: 'hashed',
+		moduleIds: 'deterministic',
 		splitChunks: {
 			chunks: "initial",
 			hidePathInfo: true,
@@ -48,10 +48,9 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: path.resolve(__dirname, '../dist/index.html'),
-			minify: production ? {
-				removeComments: true,
-				collapseWhitespace: true
-			} : undefined
-		}),
+			minify: false
+		})
 	]
 };
+
+export default config;
