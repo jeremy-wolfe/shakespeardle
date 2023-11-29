@@ -5,7 +5,6 @@ import {basename, dirname} from 'path';
 class Parser {
 	public readonly rootPath: string = dirname(dirname(__dirname));
 	public readonly srcPath: string = this.rootPath + '/books';
-	public readonly distPath: string = this.rootPath + '/dist';
 	public readonly parser: DOMParser = new DOMParser();
 	public readonly books: Book[] = [];
 	public readonly words: Map<string, Word> = new Map();
@@ -16,7 +15,7 @@ class Parser {
 			this.books.push(new Book(this, file));
 		}
 		await Promise.all(this.books.sort((a, b) => a.name.localeCompare(b.name)).map((book) => book.parse()));
-		await writeFile(`${this.distPath}/books.json`, JSON.stringify({
+		await writeFile(`${this.srcPath}/books.json`, JSON.stringify({
 			books: this.books.map((book) => book.index),
 			words: Array.from(this.words.values()).map((word) => word.data).sort((a, b) => a.word.localeCompare(b.word))
 		}));

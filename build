@@ -6,12 +6,6 @@ DIR="$PWD"
 [ -d 'dist' ] && rm -rf dist
 mkdir dist
 
-echo 'Parser'
-cd "$DIR/parser"
-[ -d 'node_modules' ] || npm i
-[ -d 'dist' ] && rm -rf dist
-npx tsc && node dist
-
 echo
 echo 'CSS'
 cd "$DIR/client"
@@ -29,7 +23,7 @@ echo
 echo 'HTML'
 cd "$DIR/static-template"
 [ -d 'node_modules' ] || npm i
-npx tsc && node dist "$HASH" > "$DIR/dist/index.html"
+npx tsc -b && node dist "$HASH" > "$DIR/dist/index.html"
 
 echo
 echo 'Webpack'
@@ -37,6 +31,7 @@ cd "$DIR/client"
 npx webpack
 
 echo
-echo 'Assets'
+echo 'Assets & Books'
 cd "$DIR"
 cp -r assets dist/
+cp books/books.json dist/
