@@ -1,4 +1,5 @@
 import {App} from '.';
+import {RandomGrid} from './grid/random';
 
 export abstract class Subtitle {
 	protected readonly header: HTMLHeadElement = document.querySelector('#container > header');
@@ -25,8 +26,17 @@ export class DailySubtitle extends Subtitle {
 }
 
 export class RandomSubtitle extends Subtitle {
-	constructor(randomIndex: number) {
+	protected readonly rollButton: HTMLDivElement = document.createElement('div');
+
+	constructor(grid: RandomGrid) {
 		super();
-		this.subtitle.innerText = `Random word #${randomIndex}`;
+		this.rollButton.className = 'btn dice';
+		this.rollButton.innerHTML = '<svg><use href="#icon-dice"></use></svg>';
+		this.subtitle.innerText = `Random word #${grid.randomIndex}`;
+		this.subtitle.append(this.rollButton);
+
+		this.rollButton.addEventListener('click', () => {
+			grid.rollDice();
+		}, {once: true});
 	}
 }

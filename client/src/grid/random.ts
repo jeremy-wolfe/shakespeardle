@@ -3,20 +3,16 @@ import {App} from 'index';
 import {RandomSubtitle} from '../subtitle';
 
 export class RandomGrid extends Grid {
-	public randomButton: HTMLDivElement = document.getElementById('random-btn') as HTMLDivElement;
-	public dailyButton: HTMLDivElement = document.getElementById('daily-btn') as HTMLDivElement;
 	private _randomIndex?: number = parseInt(localStorage.getItem('randomIndex') || '') || undefined;
 
 	constructor(app: App, tries: number) {
 		super(app, tries);
-		this.randomButton.addEventListener('click', () => this.app.activeGrid === this ? this.rollDice() : this.app.switchGrids());
-		this.dailyButton.addEventListener('click', () => this.app.activeGrid === this ? this.app.switchGrids() : undefined);
 	}
 
 	public load(): void {
 		if (typeof this.randomIndex !== 'number') this.randomIndex = this.app.bookshelf.randomIndex;
 		super.load(this.app.bookshelf.randomWords[this.randomIndex]);
-		this.subtitle = new RandomSubtitle(this.randomIndex);
+		this.subtitle = new RandomSubtitle(this);
 	}
 
 	public rollDice(): void {

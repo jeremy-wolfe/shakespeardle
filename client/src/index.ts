@@ -18,6 +18,7 @@ export class App {
 	public readonly notify: Notify = new Notify();
 	public readonly grid: Grid = new Grid(this, 6);
 	public readonly analytics: Analytics = new Analytics(this);
+	public readonly gridToggleButton: HTMLDivElement = document.getElementById('grid-toggle-btn') as HTMLDivElement;
 	public randomGrid: RandomGrid = new RandomGrid(this, 6);
 	public loaded: Promise<void>;
 	public isLoaded: boolean = false;
@@ -29,6 +30,7 @@ export class App {
 	constructor() {
 		const stats = localStorage.getItem('stats');
 		this.stats = new Stats(this, stats && JSON.parse(stats) || []);
+		this.gridToggleButton.addEventListener('click', () => this.switchGrids());
 		this.loaded = this.load();
 	}
 
@@ -87,6 +89,7 @@ export class App {
 		this._activeGrid.attach();
 		this.inactiveGrid.detach();
 		localStorage.setItem('activeGrid', isRandom ? 'randomGrid' : 'grid');
+		this.gridToggleButton.classList.toggle('random', isRandom);
 	}
 
 	private set activeGrid(grid: Grid) {
