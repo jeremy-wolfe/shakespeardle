@@ -291,7 +291,7 @@ ul {
 	}
 }
 
-.close, #stats-btn, #random-btn, #daily-btn {
+.close, #stats-btn, #grid-toggle-btn {
 	position: absolute;
 	top: 10px;
 	padding: 10px;
@@ -321,7 +321,7 @@ ul {
 	}
 }
 
-#random-btn, #daily-btn, #stats-btn {
+#grid-toggle-btn, #stats-btn {
 	svg {
 		width: 20px;
 		height: 20px;
@@ -330,12 +330,15 @@ ul {
 	}
 }
 
-#random-btn {
+#grid-toggle-btn {
 	left: 10px;
-}
 
-#daily-btn {
-	left: 40px;
+	&:not(.random) svg:first-child {
+		display: none;
+	}
+	&.random svg:last-child {
+		display: none;
+	}
 }
 
 #stats-btn {
@@ -384,6 +387,22 @@ img {
 
 		&:hover {
 			background: lighten(color.$validPos, 2%);
+		}
+	}
+	&.dice {
+		position: relative;
+		top: 3px;
+		margin: 0 10px;
+		padding: 0 15px;
+		background: #333;
+
+		&:hover {
+			background: #555;
+		}
+
+		svg {
+			width: 1.5em;
+			margin-right: 0;
 		}
 	}
 }

@@ -1,24 +1,8 @@
-import {$, RawContent, RootTemplate, comment, css, raw} from '@elevensolutions/htts';
-import {IconName, IconPrefix, icon, library, toHtml} from '@fortawesome/fontawesome-svg-core';
-import {faGithub} from '@fortawesome/free-brands-svg-icons';
-import {faCalendarDay, faChartSimple, faCircleCheck, faDeleteLeft, faDice, faShareNodes} from '@fortawesome/free-solid-svg-icons';
+import {$, RootTemplate, comment, css, raw} from '@elevensolutions/htts';
 import {readFileSync} from 'fs';
-
-library.add(faChartSimple, faCalendarDay, faDice, faGithub, faShareNodes, faDeleteLeft, faCircleCheck);
-
-function i(iconName: IconName, prefix: IconPrefix = 'fas'): RawContent {
-	return raw(icon({iconName, prefix}).html.join(''));
-}
-
-function symbol(iconName: IconName, prefix?: IconPrefix): RawContent {
-	const svg = icon({iconName, prefix}).abstract[0];
-	svg.tag = 'symbol';
-	svg.attributes.id = 'icon-' + iconName;
-	return raw(toHtml(svg));
-}
+import {i, symbol, use} from './icons.js';
 
 const attribution = readFileSync('node_modules/@fortawesome/fontawesome-svg-core/attribution.js').toString().replace(/.*`(.*)`.*/s, '$1');
-
 const hash = process.argv[2];
 
 const template = new RootTemplate([
@@ -27,7 +11,7 @@ const template = new RootTemplate([
 		$.meta({name: 'viewport', content: 'width=device-width, initial-scale=1'}),
 		$.meta({name: 'theme-color', content: '#111111'}),
 		$.title('Shakespeardle'),
-		$.link({rel: 'manifest', href: '/assets/site.webmanifest'}),
+		$.link({rel: 'manifest', href: '/assets/site.webmanifest?v2'}),
 		$.link({rel: 'icon', href: '/assets/icon.svg'}),
 		$.link({rel: 'apple-touch-icon', href: '/assets/apple-touch-icon.png'}),
 		$.link({rel: 'stylesheet', href: `/index${hash ? '.' + hash : ''}.css`}),
@@ -52,8 +36,7 @@ const template = new RootTemplate([
 	$.body([
 		$('#container')([
 			$.header([
-				$('#random-btn')(i('dice')),
-				$('#daily-btn')(i('calendar-day')),
+				$('#grid-toggle-btn')([i('calendar-day'), use('dice')]),
 				$('#stats-btn')(i('chart-simple')),
 				$.h1(['Shakespear', $.span('dl'), 'e'])
 			]),
@@ -63,10 +46,10 @@ const template = new RootTemplate([
 				$('.close')([$.svg({viewBox: '0 0 40 40'}, [$.path({d: 'M0,0 L40,40 M0,40 L40,0'})])]),
 				$.h2('Statistics'),
 				$.ul([
-					$.li([$.b('played')]),
-					$.li([$.b('won')]),
-					$.li([$.b('streak')]),
-					$.li([$.b('best streak')])
+					$.li([$.b, 'played']),
+					$.li([$.b, 'won']),
+					$.li([$.b, 'streak']),
+					$.li([$.b, 'best streak'])
 				]),
 				$.footer([
 					$.div([
@@ -93,7 +76,8 @@ const template = new RootTemplate([
 		comment(`\nIcons provided by ${attribution}`),
 		$.svg({style: {display: 'none'}}, [
 			symbol('circle-check'),
-			symbol('delete-left')
+			symbol('delete-left'),
+			symbol('dice')
 		]),
 		raw`\n\n`
 	])
