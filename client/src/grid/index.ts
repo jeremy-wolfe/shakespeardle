@@ -14,6 +14,8 @@ export class Grid {
 	public readonly keyboard: Keyboard = new Keyboard(this);
 	public word: Word;
 	public answer: AnswerRow;
+	public isWin?: boolean;
+	public isLoss?: boolean;
 	private readonly emoji: Emoji = new Emoji();
 	private readonly style: HTMLStyleElement = document.createElement('style');
 	private _activeRow: Row;
@@ -79,7 +81,7 @@ export class Grid {
 	}
 
 	public updateCursor(): void {
-		if (this.app.isComplete) return this.end();
+		if (this.isComplete) return this.end();
 		this.activeRow = this.rows.find((row) => !row.isComplete);
 		this.activeTile = this.activeRow?.tiles.find((tile) => !tile.value);
 	}
@@ -90,13 +92,17 @@ export class Grid {
 		this.keyboard.end();
 		this.save();
 		this.app.saveStats();
-		setTimeout(() => {
+		if (this.app.activeGrid === this && this.app.activeGrid.constructor === Grid)setTimeout(() => {
 			this.app.stats.show();
-		}, this.app.isWin ? 1000 : 3000);
+		}, this.isWin ? 1000 : 3000);
 		if (this.app.isLoaded) this.app.analytics.event('level_end', {
 			level_name: `#${this.app.bookshelf.day - this.app.epoch}`,
-			success: this.app.isWin
+			success: this.isWin
 		});
+	}
+	
+	public get isComplete(): boolean {
+		return this.isWin || this.isLoss;
 	}
 
 	public get state(): [string, boolean][] {

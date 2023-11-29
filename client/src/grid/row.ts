@@ -42,11 +42,11 @@ export class Row extends Segment {
 		for (const tile of this.tiles) tile.validatePosition();
 		for (const tile of this.tiles) tile.validateLetter();
 		if (guess === word) {
-			app.isWin = true;
-			app.isLoss = false;
+			this.grid.isWin = true;
+			this.grid.isLoss = false;
 		} else if (rows[rows.length - 1] === this) {
-			app.isWin = false;
-			app.isLoss = true;
+			this.grid.isWin = false;
+			this.grid.isLoss = true;
 			this.grid.answer.show();
 		}
 		this.grid.updateCursor();

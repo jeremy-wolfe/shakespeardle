@@ -90,6 +90,6 @@ class StatElements {
 		(['played', 'accuracy', 'currentStreak', 'longestStreak'] as const).forEach((value, i) => {
 			this.statItems[i].innerHTML = this.stats[value].toString();
 		});
-		this.share.style.display = this.stats.app.isComplete ? '' : 'none';
+		this.share.style.display = this.stats.app.grid.isComplete ? '' : 'none';
 	}
 }

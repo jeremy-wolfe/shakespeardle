@@ -9,6 +9,10 @@ const windowLoad = new Promise((resolve) => {
 	window.addEventListener('load', resolve);
 });
 
+const documentLoad = new Promise((resolve) => {
+	document.addEventListener('DOMContentLoaded', resolve);
+});
+
 export class App {
 	public readonly epoch: number = 19309;
 	public readonly notify: Notify = new Notify();
@@ -19,8 +23,6 @@ export class App {
 	public isLoaded: boolean = false;
 	public bookshelf?: Bookshelf;
 	public stats: Stats;
-	public isWin?: boolean;
-	public isLoss?: boolean;
 	public inactiveGrid?: Grid;
 	private _activeGrid?: Grid;
 
@@ -31,14 +33,14 @@ export class App {
 	}
 
 	public saveStats(): void {
-		this.stats.add(this.bookshelf.day, this.isWin, this.grid.guesses);
+		this.stats.add(this.bookshelf.day, this.grid.isWin, this.grid.guesses);
 		localStorage.setItem('stats', JSON.stringify(this.stats.data));
 	}
 
 	public share(): void {
-		if (!this.isComplete) return;
+		if (!this.grid.isComplete) return;
 		const text = `Shakespeardle #${this.bookshelf.day - this.epoch} `
-			+ ` ${this.isWin ? this.grid.guesses : 'X'} / ${this.grid.tries}\n`
+			+ ` ${this.grid.isWin ? this.grid.guesses : 'X'} / ${this.grid.tries}\n`
 			+ `${this.bookshelf.word.book.title}\n\n`
 			+ `${this.grid.tileMapString}\n\n`
 			+ 'https://shakespeardle.com';
@@ -69,6 +71,7 @@ export class App {
 
 	private async load(): Promise<void> {
 		await windowLoad;
+		await documentLoad;
 		this.activeGrid = this[localStorage.getItem('activeGrid') as 'grid' | 'randomGrid' || 'grid'] || this.grid;
 		this.analytics.load();
 		this.bookshelf = await Bookshelf.load();
@@ -84,11 +87,6 @@ export class App {
 		this._activeGrid.attach();
 		this.inactiveGrid.detach();
 		localStorage.setItem('activeGrid', isRandom ? 'randomGrid' : 'grid');
-		this.randomGrid.dailyButton.classList.toggle('disabled', !isRandom);
-	}
-
-	public get isComplete(): boolean {
-		return this.isWin || this.isLoss;
 	}
 
 	private set activeGrid(grid: Grid) {
