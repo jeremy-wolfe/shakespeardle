@@ -1,5 +1,4 @@
 import {Keyboard} from 'keyboard';
-import {keyClick} from './click';
 
 export abstract class Key {
 	public readonly element: HTMLLIElement = document.createElement('li');
@@ -10,7 +9,6 @@ export abstract class Key {
 		this.element.innerHTML = this.value;
 		this.element.addEventListener('click', () => {
 			navigator.vibrate?.(1);
-			keyClick();
 			this.press();
 		});
 	}
@@ -18,6 +16,7 @@ export abstract class Key {
 
 export class CharacterKey extends Key {
 	public press(): void {
+		this.keyboard.keyClick(this);
 		this.keyboard.grid.key(this.value);
 	}
 
@@ -33,6 +32,7 @@ export class EnterKey extends Key {
 	}
 
 	public press(): void {
+		this.keyboard.keyClick(this);
 		this.keyboard.grid.submit();
 	}
 }
@@ -44,6 +44,7 @@ export class BackspaceKey extends Key {
 	}
 
 	public press(): void {
+		this.keyboard.keyClick(this);
 		this.keyboard.grid.backspace();
 	}
 }

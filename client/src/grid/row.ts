@@ -28,15 +28,15 @@ export class Row extends Segment {
 		this.animationEnd();
 		this.element.addEventListener('animationend', this.animationEnd);
 		this.element.classList.add('invalid');
-		navigator.vibrate?.([100, 100, 100, 100, 100]);
+		navigator.vibrate?.([100, 100, 100]);
 	}
 
 	public submit(): void {
 		const {guess} = this;
-		const {app, rows} = this.grid;
+		const {rows} = this.grid;
 		const {word} = this.grid.word;
 		if (guess.length < word.length) return;
-		if (!app.bookshelf.has(guess)) return this.invalid();
+		if (this.isInvalid) return this.invalid();
 		this._isComplete = true;
 		this.element.classList.add('complete');
 		for (const tile of this.tiles) tile.validatePosition();
@@ -62,6 +62,10 @@ export class Row extends Segment {
 
 	public get isComplete(): boolean {
 		return this._isComplete;
+	}
+
+	public get isInvalid(): boolean {
+		return !this.grid.app.bookshelf.has(this.guess);
 	}
 
 	public get guess(): string {

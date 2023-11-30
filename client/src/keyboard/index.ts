@@ -1,6 +1,5 @@
 import {Grid} from 'grid';
 import {Key, CharacterKey, EnterKey, BackspaceKey} from './key';
-import {keyClick} from './click';
 
 export class Keyboard {
 	public readonly element: HTMLUListElement = document.createElement('ul');
@@ -13,7 +12,6 @@ export class Keyboard {
 
 	private readonly keypress = (event: KeyboardEvent) => {
 		const keyPressed = event.key.toLowerCase();
-		keyClick();
 		switch (keyPressed) {
 			case 'enter':
 			case 'backspace':
@@ -44,5 +42,9 @@ export class Keyboard {
 	public getKey(value: string): CharacterKey {
 		const key = this.keys.find((key) => key.value === value);
 		if (key && key instanceof CharacterKey) return key;
+	}
+
+	public keyClick(key: Key): void {
+		this.grid.app.keyClick.play(key);
 	}
 }
