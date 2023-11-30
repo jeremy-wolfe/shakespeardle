@@ -17,6 +17,7 @@ export class Tile extends Segment {
 	}
 
 	public setAnimations(): void {
+		if (this.flipAnimation) return;
 		this.flipAnimation = this.element.getAnimations()?.[0];
 		this.keyAnimation = this.element.animate([
 			{transform: 'scale(100%)'},

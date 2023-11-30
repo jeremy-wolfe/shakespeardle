@@ -29,6 +29,7 @@ export class Grid {
 		document.querySelector('main').append(this.element);
 		this.keyboard.attach();
 		this.subtitle.attach();
+		for (const row of this.rows) row.attach();
 	}
 
 	public detach(): void {
@@ -36,6 +37,7 @@ export class Grid {
 		this.style.remove();
 		this.keyboard.detach();
 		this.subtitle.detach();
+		for (const row of this.rows) row.detach();
 	}
 
 	public load(word: Word): void {

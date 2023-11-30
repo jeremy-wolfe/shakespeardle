@@ -18,10 +18,6 @@ export class Row extends Segment {
 		this.grid.element.append(this.element);
 		while (this.tiles.push(new Tile(this)) < this.grid.word.word.length);
 		this.grid.tiles.push(...this.tiles);
-		setTimeout(() => {
-			this.element.classList.add('animate');
-			for (const tile of this.tiles) tile.setAnimations();
-		}, 100 * this.index);
 	}
 
 	private invalid(): void {
@@ -29,6 +25,17 @@ export class Row extends Segment {
 		this.element.addEventListener('animationend', this.animationEnd);
 		this.element.classList.add('invalid');
 		navigator.vibrate?.([100, 100, 100]);
+	}
+
+	public attach(): void {
+		setTimeout(() => {
+			this.element.classList.add('animate');
+			for (const tile of this.tiles) tile.setAnimations();
+		}, 100 * this.index);
+	}
+
+	public detach(): void {
+		this.element.classList.remove('animate');
 	}
 
 	public submit(): void {
