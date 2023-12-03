@@ -1,0 +1,15 @@
+#container > header {
+	padding: var(--padding);
+	text-align: center;
+
+	h1 > span {
+		display: inline-block;
+		text-align: center;
+		overflow: hidden;
+		vertical-align: bottom;
+		animation: reveal 1500ms 500ms both ease-in-out;
+	}
+	p {
+		animation: notify 500ms 1s both ease-in-out;
+	}
+}

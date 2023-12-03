@@ -1,0 +1,49 @@
+@use 'color';
+
+#container > footer {
+	flex: 0 1 200px;
+	display: flex;
+	flex-direction: column;
+	padding: var(--padding);
+	box-sizing: border-box;
+	animation: slide 500ms 1s both ease-in-out;
+
+	ul {
+		flex: 1 1 auto;
+		grid-template-columns: repeat(20, 1fr);
+
+		li {
+			grid-column-end: span 2;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0 0.5em;
+			min-height: 3em;
+			text-align: center;
+			font-weight: 400;
+			background: color.$grayLight;
+			cursor: pointer;
+			user-select: none;
+
+			&:nth-child(11) {
+				grid-column-start: 2;
+			}
+			&#enter, &#backspace {
+				grid-column-end: span 3;
+			}
+
+			&:hover {
+				background-color: rgba(color.$grayLight, 0.8);
+			}
+
+			&.disabled {
+				background: color.$grayDark;
+			}
+
+			svg {
+				width: 2em;
+				height: 1.5em;
+			}
+		}
+	}
+}
