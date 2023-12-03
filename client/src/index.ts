@@ -37,6 +37,7 @@ export class App {
 	}
 
 	public saveStats(): void {
+		if (!this.grid.isComplete || !this.grid.guesses) return;
 		this.stats.add(this.bookshelf.day, this.grid.isWin, this.grid.guesses);
 		localStorage.setItem('stats', JSON.stringify(this.stats.data));
 	}

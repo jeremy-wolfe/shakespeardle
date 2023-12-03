@@ -32,6 +32,13 @@ export class RandomGrid extends Grid {
 		localStorage.setItem('randomState', JSON.stringify(state));
 	}
 
+	protected saveStats(): void {
+		if (this.app.isLoaded) this.app.analytics.event('level_end', {
+			level_name: `Random #${this._randomIndex}`,
+			success: this.isWin
+		});
+	}
+
 	private set randomIndex(index: number) {
 		this._randomIndex = index;
 		localStorage.setItem('randomIndex', this.randomIndex.toString());

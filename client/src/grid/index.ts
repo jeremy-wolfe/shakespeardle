@@ -88,19 +88,23 @@ export class Grid {
 		this.activeTile = this.activeRow?.tiles.find((tile) => !tile.value);
 	}
 
-	private end(): void {
-		this.activeRow = null;
-		this.activeTile = null;
-		this.keyboard.end();
-		this.save();
-		this.app.saveStats();
-		if (this.app.activeGrid === this && this.app.activeGrid.constructor === Grid)setTimeout(() => {
+	protected saveStats(): void {
+		setTimeout(() => {
+			this.app.saveStats();
 			this.app.stats.show();
 		}, this.isWin ? 1000 : 3000);
 		if (this.app.isLoaded) this.app.analytics.event('level_end', {
 			level_name: `#${this.app.bookshelf.day - this.app.epoch}`,
 			success: this.isWin
 		});
+	}
+
+	private end(): void {
+		this.activeRow = null;
+		this.activeTile = null;
+		this.keyboard.end();
+		this.save();
+		this.saveStats();
 	}
 	
 	public get isComplete(): boolean {
