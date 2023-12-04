@@ -92,9 +92,12 @@ aside {
 
 				li {
 					position: relative;
-					display: block;
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: flex-start;
 					margin: 0.5em 0;
-					padding: 0 0 0 2em;
+					padding: 0;
 					text-align: left;
 					text-transform: uppercase;
 					font-size: 0.75rem;
@@ -103,10 +106,10 @@ aside {
 					&:before {
 						content: '';
 						display: block;
-						position: absolute;
-						left: 0;
 						width: 0.75rem;
 						height: 0.75rem;
+						margin-right: 0.5rem;
+						border-radius: 3px;
 					}
 				}
 			}
