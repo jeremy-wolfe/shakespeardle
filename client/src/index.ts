@@ -4,7 +4,7 @@ import {Grid} from 'grid';
 import {RandomGrid} from 'grid/random';
 import {Notify} from 'notify';
 import {Stats} from 'stats';
-import {KeyClick} from './keyboard/click';
+import {KeyClick} from 'keyboard/click';
 
 const windowLoad = new Promise((resolve) => {
 	window.addEventListener('load', resolve);
@@ -17,7 +17,7 @@ const documentLoad = new Promise((resolve) => {
 export class App {
 	public readonly epoch: number = 19309;
 	public readonly notify: Notify = new Notify();
-	public readonly grid: Grid = new Grid(this, 6);
+	public readonly grid = new Grid(this, 6);
 	public readonly analytics: Analytics = new Analytics(this);
 	public readonly gridToggleButton: HTMLDivElement = document.getElementById('grid-toggle-btn') as HTMLDivElement;
 	public readonly keyClick: KeyClick = new KeyClick(this);

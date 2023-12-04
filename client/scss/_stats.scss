@@ -1,25 +1,29 @@
 @use 'color';
 
-#container > aside {
+aside {
 	position: fixed;
 	left: 50%;
 	margin-left: -300px;
 	width: 600px;
 	bottom: 0;
-	padding: var(--padding);
-	background: color.$grayMid;
+	padding: 0;
 	text-align: center;
 	box-sizing: border-box;
-	opacity: 0;
 	transform: translateY(100%);
-	transition: transform 500ms, opacity 500ms;
+	transition: transform 500ms ease-in-out, backdrop-filter 500ms ease-in-out;
 	z-index: 10;
+	overflow: hidden;
 	border-radius: 10px 10px 0 0;
 	box-shadow: -5px 0 10px rgba(#000, 0.5);
 
-	&.show {
-		opacity: 1;
+	body.show-stats & {
 		transform: translateY(0%);
+		backdrop-filter: blur(5px);
+	}
+
+	> header {
+		padding: var(--padding) 0 0;
+		background: rgba(color.$grayMid, 0.8);
 	}
 
 	ul {
@@ -35,8 +39,91 @@
 			}
 		}
 	}
-	footer {
+
+	> figure {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		flex-wrap: wrap;
+		width: 100%;
+		box-sizing: border-box;
+		margin: 0;
 		padding: var(--padding);
+		background: rgba(mix(color.$grayMid, color.$grayDark), 0.85);
+
+		@mixin segment($n, $color) {
+			svg circle:nth-of-type(#{$n}) {
+				stroke: $color;
+			}
+			figcaption ul li:nth-of-type(#{$n}):before {
+				background: $color;
+			}
+		}
+
+		h2 {
+			width: 100%;
+			margin-bottom: var(--padding);
+		}
+
+		svg {
+			flex: 0 0 auto;
+			position: relative;
+			width: 9rem;
+			height: 9rem;
+
+			circle {
+				fill: none;
+				stroke-width: 1;
+			}
+		}
+
+		figcaption {
+			flex: 0 0 auto;
+			display: block;
+			margin: 0;
+			padding: 20px;
+
+			ul {
+				list-style: none;
+				display: block;
+				margin: 0;
+				padding: 0;
+
+				li {
+					position: relative;
+					display: block;
+					margin: 0.5em 0;
+					padding: 0 0 0 2em;
+					text-align: left;
+					text-transform: uppercase;
+					font-size: 0.75rem;
+					font-weight: 400;
+
+					&:before {
+						content: '';
+						display: block;
+						position: absolute;
+						left: 0;
+						width: 0.75rem;
+						height: 0.75rem;
+					}
+				}
+			}
+		}
+
+		@include segment(1, desaturate(lighten(color.$validPos, 15%), 30%));
+		@include segment(2, desaturate(lighten(color.$validPos, 10%), 20%));
+		@include segment(3, desaturate(lighten(color.$validPos, 5%), 10%));
+		@include segment(4, color.$validPos);
+		@include segment(5, darken(color.$validPos, 5%));
+		@include segment(6, darken(color.$validPos, 8%));
+		@include segment(7, darken(color.$validPos, 12%));
+	}
+
+	> footer {
+		padding: var(--padding);
+		background: rgba(color.$grayDark, 0.85);
 
 		> div {
 			display: flex;
@@ -68,7 +155,7 @@
 	transition: opacity 500ms, transform 0ms 500ms;
 	z-index: 9;
 
-	&.show, #loading + & {
+	body.show-stats &, #loading + & {
 		opacity: 0.5;
 		transform: translateY(0%);
 		transition: opacity 500ms, transform 0ms;

@@ -4,10 +4,11 @@ import {AnswerRow, Row} from 'grid/row';
 import {Tile} from 'grid/tile';
 import {Keyboard} from 'keyboard';
 import {DailySubtitle, Subtitle} from 'subtitle';
+import {MaxTries} from '../stats';
 
 type ValidType = 'letter' | 'position' | null;
 
-export class Grid {
+export class Grid<T extends number = number> {
 	public readonly element: HTMLDivElement = document.createElement('div');
 	public readonly rows: Row[] = [];
 	public readonly tiles: Tile[] = [];
@@ -22,7 +23,7 @@ export class Grid {
 	private _activeTile: Tile;
 	protected subtitle: Subtitle;
 
-	constructor(public readonly app: App, public readonly tries: number) {}
+	constructor(public readonly app: App, public readonly tries: T) {}
 
 	public attach(): void {
 		document.head.append(this.style);
@@ -115,8 +116,8 @@ export class Grid {
 		return this.rows.filter((row) => row.guess).map((row) => [row.guess, row.isComplete]);
 	}
 
-	public get guesses(): number {
-		return this.rows.filter((row) => row.isComplete).length;
+	public get guesses(): MaxTries | 0 {
+		return this.rows.filter((row) => row.isComplete).length as MaxTries | 0;
 	}
 
 	public set state(state: [string, boolean][]) {

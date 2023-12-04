@@ -41,32 +41,35 @@ const template = new RootTemplate([
 				$.h1(['Shakespear', $.span('dl'), 'e'])
 			]),
 			$.main,
-			$.footer,
-			$.aside([
-				$('.close')([$.svg({viewBox: '0 0 40 40'}, [$.path({d: 'M0,0 L40,40 M0,40 L40,0'})])]),
+			$.footer
+		]),
+		$.aside([
+			$('.close')([$.svg({viewBox: '0 0 40 40'}, [$.path({d: 'M0,0 L40,40 M0,40 L40,0'})])]),
+			$.header([
 				$.h2('Statistics'),
 				$.ul([
 					$.li([$.b, 'played']),
 					$.li([$.b, 'won']),
 					$.li([$.b, 'streak']),
 					$.li([$.b, 'best streak'])
+				])
+			]),
+			$.figure([$.h2('Guess Distribution')]),
+			$.footer([
+				$.div([
+					$('a.btn.github')(
+						{href: 'https://github.com/jeremy-wolfe/shakespeardle', target: '_blank'},
+						[i('github', 'fab'), 'GitHub']
+					),
+					$('.btn.share')([i('share-nodes'), 'Share'])
 				]),
-				$.footer([
-					$.div([
-						$('a.btn.github')(
-							{href: 'https://github.com/CaptainVascular/shakespeardle', target: '_blank'},
-							[i('github', 'fab'), 'GitHub']
-						),
-						$('.btn.share')([i('share-nodes'), 'Share'])
-					]),
-					$.small([
-						'This project is licensed under the terms of the ',
-						$.a({href: 'https://github.com/CaptainVascular/shakespeardle/blob/main/LICENSE.txt', target: '_blank'}, 'Mozilla Public License 2.0'),
-						'. Concept and rules based on ',
-						$.a({href: 'https://www.nytimes.com/games/wordle/index.html', target: '_blank'}, 'Wordle'),
-						'. Word list compiled from ', $.i('Shakespeare’s Plays, Sonnets and Poems'), ' from ',
-						$.a({href: 'https://shakespeare.folger.edu/', target: '_blank'}, 'The Folger Shakespeare'), '.'
-					])
+				$.small([
+					'This project is licensed under the terms of the ',
+					$.a({href: 'https://github.com/jeremy-wolfe/shakespeardle/blob/main/LICENSE.txt', target: '_blank'}, 'Mozilla Public License 2.0'),
+					'. Concept and rules based on ',
+					$.a({href: 'https://www.nytimes.com/games/wordle/index.html', target: '_blank'}, 'Wordle'),
+					'. Word list compiled from ', $.i('Shakespeare’s Plays, Sonnets and Poems'), ' from ',
+					$.a({href: 'https://shakespeare.folger.edu/', target: '_blank'}, 'The Folger Shakespeare'), '.'
 				])
 			])
 		]),
