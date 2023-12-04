@@ -27,7 +27,7 @@ export class Keyboard {
 
 	public attach(): void {
 		document.addEventListener('keydown', this.keypress);
-		document.querySelector('footer').append(this.element);
+		document.querySelector('#container > footer').append(this.element);
 	}
 
 	public detach(): void {

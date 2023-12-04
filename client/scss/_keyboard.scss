@@ -1,11 +1,13 @@
 @use 'color';
 
 #container > footer {
-	flex: 0 1 200px;
 	display: flex;
 	flex-direction: column;
+	position: fixed;
+	bottom: 0;
 	padding: var(--padding);
 	box-sizing: border-box;
+	backdrop-filter: blur(2px);
 	animation: slide 500ms 1s both ease-in-out;
 
 	ul {
