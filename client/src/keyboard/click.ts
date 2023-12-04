@@ -33,16 +33,15 @@ class ClickSound {
 		oscillator.start(start);
 		oscillator.stop(start + this.duration);
 	}
-
 }
 
 export class KeyClick {
 	public readonly context: AudioContext = new AudioContext();
 	private readonly sounds = {
-		normal: new ClickSound(this, 1, [1400, 100], 0.1),
+		normal: new ClickSound(this, 1, [1400, 200], 0.1),
 		disabled: new ClickSound(this, 0.7, [12000, 3000], 0.005),
-		invalid: new ClickSound(this, 1, [1000, 120], 0.25),
-		submit: new ClickSound(this, 1, [1200, 150], 0.25)
+		invalid: new ClickSound(this, 1, [1200, 300], 0.25),
+		submit: new ClickSound(this, 1, [1400, 380], 0.25)
 	} as const;
 
 	constructor(public readonly app: App) {}
