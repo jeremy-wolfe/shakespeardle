@@ -23,9 +23,18 @@
 			min-height: 3em;
 			text-align: center;
 			font-weight: 400;
-			background: color.$grayLight;
+			color: #000;
 			cursor: pointer;
 			user-select: none;
+			transition: background-color 500ms;
+
+			&:not(.valid-letter):not(.valid-position):not(.disabled) {
+				background: color.$grayMid;
+
+				&:hover {
+					background: color.$grayLight;
+				}
+			}
 
 			&:nth-child(11) {
 				grid-column-start: 2;
@@ -35,7 +44,7 @@
 			}
 
 			&:hover {
-				background-color: rgba(color.$grayLight, 0.8);
+				background-color: rgba(#fff, 0.25);
 			}
 
 			&.disabled {

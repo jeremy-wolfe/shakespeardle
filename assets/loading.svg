@@ -1,19 +1,54 @@
 <svg version="1.1" viewBox="0 0 114 114" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<defs>
 		<mask id="loading-mask" maskUnits="userSpaceOnUse">
-			<circle cx="57" cy="57" r="50" style="fill:#fff"/>
+			<circle cx="57" cy="57" r="41" style="stroke:#fff;stroke-width:20"/>
 		</mask>
-		<linearGradient id="loading-gradient" x1="35" x2="60" y1="25" y2="75" gradientUnits="userSpaceOnUse">
-			<stop style="stop-color:#fff;stop-opacity:.4" offset="0"/>
-			<stop style="stop-color:#fff;stop-opacity:0" offset="1"/>
+		<mask id="shine-mask" maskContentUnits="objectBoundingBox">
+			<rect x="0" y="0" width="1" height="1" fill="url(#shine-mask-gradient)"/>
+		</mask>
+		<mask id="under-glow-mask" maskContentUnits="objectBoundingBox">
+			<rect x="0" y="0" width="1" height="1" fill="url(#under-glow-gradient)"/>
+		</mask>
+		<linearGradient id="main-gradient" x1="0" x2="114" y1="57" y2="57" gradientUnits="userSpaceOnUse">
+			<stop style="stop-color:#bb3" offset="0.1"/>
+			<stop style="stop-color:#093" offset="0.4"/>
+			<stop style="stop-color:#093" offset="0.6"/>
+			<stop style="stop-color:#bb3" offset="0.9"/>
 		</linearGradient>
-		<style>@keyframes loading {0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);}}</style>
+		<radialGradient id="under-glow-gradient" gradientUnits="objectBoundingBox">
+			<stop style="stop-color:#fff;stop-opacity:0" offset="0.4"/>
+			<stop style="stop-color:#fff;stop-opacity:0.35" offset="0.5"/>
+			<stop style="stop-color:#fff;stop-opacity:0.7" offset="0.565"/>
+			<stop style="stop-color:#fff;stop-opacity:0.7" offset="0.89"/>
+			<stop style="stop-color:#fff;stop-opacity:0.3" offset="0.94"/>
+			<stop style="stop-color:#fff;stop-opacity:0" offset="1"/>
+		</radialGradient>
+		<radialGradient id="glow-gradient" gradientUnits="userSpaceOnUse">
+			<stop style="stop-color:#fff;stop-opacity:0" offset="0.55"/>
+			<stop style="stop-color:#fff;stop-opacity:0.4" offset="0.67"/>
+			<stop style="stop-color:#fff;stop-opacity:0.4" offset="0.75"/>
+			<stop style="stop-color:#fff;stop-opacity:0" offset="0.9"/>
+		</radialGradient>
+		<radialGradient id="shine-gradient" gradientUnits="userSpaceOnUse">
+			<stop style="stop-color:#fff;stop-opacity:0" offset="0.7"/>
+			<stop style="stop-color:#fff;stop-opacity:0.2" offset="0.75"/>
+			<stop style="stop-color:#fff;stop-opacity:0.9" offset="0.8"/>
+			<stop style="stop-color:#fff;stop-opacity:0.2" offset="0.85"/>
+			<stop style="stop-color:#fff;stop-opacity:0" offset="0.9"/>
+		</radialGradient>
+		<radialGradient id="shine-mask-gradient" gradientUnits="objectBoundingBox">
+			<stop style="stop-color:#fff;stop-opacity:1" offset="0"/>
+			<stop style="stop-color:#fff;stop-opacity:0" offset="1"/>
+		</radialGradient>
+		<style>
+			@keyframes loading {0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);}}
+			g {animation:loading 1s infinite linear;transform-origin:50%}
+		</style>
 	</defs>
-	<g mask="url(#loading-mask)" style="animation:loading 1s infinite linear;transform-origin:50%">
-		<rect x="9" y="9" width="96" height="96" style="fill:#b3b3b3"/>
-		<rect x="57" y="9" width="48" height="48" style="fill:#aa2"/>
-		<rect x="9" y="57" width="48" height="48" style="fill:#094"/>
+	<g>
+		<circle mask="url(#under-glow-mask)" cx="57" cy="57" r="57" fill="url(#main-gradient)"/>
+		<rect mask="url(#loading-mask)" x="0" y="0" width="114" height="114" fill="url(#main-gradient)"/>
 	</g>
-	<circle cx="57" cy="57" r="50" style="fill:none;stroke-width:6;stroke:#ccc"/>
-	<circle cx="57" cy="57" r="40" style="fill:url(#loading-gradient)"/>
+	<circle cx="57" cy="57" r="57" fill="url(#glow-gradient)"/>
+	<circle mask="url(#shine-mask)" cx="10" cy="10" r="60" fill="url(#shine-gradient)"/>
 </svg>
