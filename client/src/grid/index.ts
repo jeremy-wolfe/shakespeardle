@@ -92,7 +92,6 @@ export class Grid<T extends number = number> {
 	protected saveStats(): void {
 		setTimeout(() => {
 			this.app.saveStats();
-			this.app.stats.show();
 		}, this.isWin ? 1000 : 3000);
 		if (this.app.isLoaded) this.app.analytics.event('level_end', {
 			level_name: `#${this.app.bookshelf.day - this.app.epoch}`,

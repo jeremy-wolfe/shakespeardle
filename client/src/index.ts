@@ -37,9 +37,10 @@ export class App {
 	}
 
 	public saveStats(): void {
-		if (!this.grid.isComplete || !this.grid.guesses) return;
+		if (!this.grid.isComplete || !this.grid.guesses || this._activeGrid !== this.grid) return;
 		this.stats.add(this.bookshelf.day, this.grid.isWin, this.grid.guesses);
 		localStorage.setItem('stats', JSON.stringify(this.stats.data));
+		this.stats.show();
 	}
 
 	public share(): void {
