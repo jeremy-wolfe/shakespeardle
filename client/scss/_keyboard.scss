@@ -24,7 +24,6 @@
 			min-height: 3em;
 			text-align: center;
 			font-weight: 400;
-			color: #000;
 			cursor: pointer;
 			user-select: none;
 			transition: background-color 500ms;
@@ -50,6 +49,18 @@
 
 			&.disabled {
 				background: color.$grayDark;
+				color: color.$grayLight;
+
+				&::after {
+					content: '';
+					position: absolute;
+					top: 0;
+					left: 50%;
+					width: 1px;
+					height: 100%;
+					background: rgba(#fff, 0.5);
+					transform: rotate(45deg);
+				}
 			}
 
 			svg {

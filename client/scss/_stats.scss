@@ -24,6 +24,7 @@ aside {
 	> header {
 		padding: var(--padding) 0 0;
 		background: rgba(color.$grayMid, 0.8);
+		overflow: hidden;
 
 		ul {
 			grid-template-columns: repeat(4, 1fr);

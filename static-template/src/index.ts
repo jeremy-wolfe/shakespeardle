@@ -82,7 +82,7 @@ const template = new RootTemplate([
 				])
 			])
 		]),
-		$('#loading')([$.img({src: '/assets/loading.svg', alt: 'Loading'})]),
+		$('#loading')([$.img({src: '/assets/loading.svg?v2', alt: 'Loading'})]),
 		$('#shade'),
 		raw`\n\n`,
 		comment(`\nIcons provided by ${attribution}`),

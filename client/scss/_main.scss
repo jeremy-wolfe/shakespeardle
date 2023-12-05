@@ -36,15 +36,13 @@ main {
 	padding: 0 var(--padding) 200px;
 
 	ul {
+		margin: 0;
 		padding: 2px;
 		border: 1px solid transparent;
 		transform-style: preserve-3d;
 
 		&.complete li:not(.valid-letter):not(.valid-position) {
 			@include color.tileColor(color.$grayMid);
-		}
-		&.complete li {
-			color: #000;
 		}
 
 		&.invalid {
@@ -97,7 +95,6 @@ main, #container > footer, aside > header {
 		position: relative;
 		display: grid;
 		gap: 5px;
-		margin: 0 auto;
 		
 		li {
 			position: relative;
