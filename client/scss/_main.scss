@@ -91,41 +91,42 @@ main {
 	}
 }
 
-ul {
-	list-style: none;
-	position: relative;
-	display: grid;
-	gap: 5px;
-	margin: 0;
-	padding: 0;
-	
-	li {
+main, #container > footer, aside > header {
+	ul {
+		list-style: none;
 		position: relative;
-		display: block;
-		margin: 0;
-		padding: 0;
-		border-radius: 5px;
-		overflow: hidden;
+		display: grid;
+		gap: 5px;
+		margin: 0 auto;
+		
+		li {
+			position: relative;
+			display: block;
+			margin: 0;
+			padding: 0;
+			border-radius: 5px;
+			overflow: hidden;
 
-		&::before {
-			content: '';
-			position: absolute;
-			top: -5px;
-			right: -5px;
-			bottom: -5px;
-			left: -5px;
-			opacity: 0;
-			z-index: -1;
-			transition: opacity 500ms, background-color 500ms;
-		}
+			&::before {
+				content: '';
+				position: absolute;
+				top: -5px;
+				right: -5px;
+				bottom: -5px;
+				left: -5px;
+				opacity: 0;
+				z-index: -1;
+				transition: opacity 500ms, background-color 500ms;
+			}
 
-		&.valid-letter {
-			@include color.tileColor(color.$validLtr);
-			box-shadow: 0 0 8px 2px rgba(color.$validLtr, 0.5);
-		}
-		&.valid-position {
-			@include color.tileColor(color.$validPos);
-			box-shadow: 0 0 8px 2px rgba(color.$validPos, 0.5);
+			&.valid-letter {
+				@include color.tileColor(color.$validLtr);
+				box-shadow: 0 0 8px 2px rgba(color.$validLtr, 0.5);
+			}
+			&.valid-position {
+				@include color.tileColor(color.$validPos);
+				box-shadow: 0 0 8px 2px rgba(color.$validPos, 0.5);
+			}
 		}
 	}
 }

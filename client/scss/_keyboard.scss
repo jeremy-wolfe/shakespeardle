@@ -13,6 +13,7 @@
 	ul {
 		flex: 1 1 auto;
 		grid-template-columns: repeat(20, 1fr);
+		padding: 0;
 
 		li {
 			grid-column-end: span 2;

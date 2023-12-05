@@ -24,18 +24,17 @@ aside {
 	> header {
 		padding: var(--padding) 0 0;
 		background: rgba(color.$grayMid, 0.8);
-	}
 
-	ul {
-		grid-template-columns: repeat(4, 1fr);
-		max-width: 500px;
-		margin: 0 auto;
-		padding: var(--padding);
+		ul {
+			grid-template-columns: repeat(4, 1fr);
+			max-width: 500px;
+			padding: var(--padding);
 
-		li {
-			b {
-				display: block;
-				font-size: 2rem;
+			li {
+				b {
+					display: block;
+					font-size: 2rem;
+				}
 			}
 		}
 	}
