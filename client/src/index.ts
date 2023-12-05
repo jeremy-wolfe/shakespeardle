@@ -85,6 +85,7 @@ export class App {
 		this.randomGrid.load();
 		this.stats.recalculate();
 		document.getElementById('loading').remove();
+		document.body.classList.add('loaded');
 		this.isLoaded = true;
 	}
 	

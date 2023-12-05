@@ -1,15 +1,44 @@
 #container > header {
+	box-sizing: border-box;
 	padding: var(--padding);
 	text-align: center;
 
-	h1 > span {
+	h1 {
+		position: relative;
 		display: inline-block;
-		text-align: center;
-		overflow: hidden;
-		vertical-align: bottom;
-		animation: reveal 1500ms 500ms both ease-in-out;
+		background: rgba(#111, 0.7);
+		z-index: 2;
+
+		> span {
+			display: inline-block;
+			text-align: center;
+			overflow: hidden;
+			vertical-align: bottom;
+			animation: reveal 1500ms 500ms both ease-in-out;
+		}
 	}
 	p {
 		animation: notify 500ms 1s both ease-in-out;
+	}
+
+	> svg {
+		position: absolute;
+		left: 50%;
+		transform: translateX(calc(-100vw - 50%));
+		top: var(--padding);
+		fill: none;
+		stroke: #fff;
+		stroke-width: 1;
+		width: auto;
+		height: 45px;
+		transition: transform 250ms 1500ms ease-in-out;
+
+		body.loaded & {
+			transform: translateX(-50%);
+		}
+
+		.arrow-short {
+			display: none;
+		}
 	}
 }

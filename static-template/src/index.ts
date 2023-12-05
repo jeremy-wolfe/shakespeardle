@@ -5,6 +5,9 @@ import {i, symbol, use} from './icons.js';
 const attribution = readFileSync('node_modules/@fortawesome/fontawesome-svg-core/attribution.js').toString().replace(/.*`(.*)`.*/s, '$1');
 const hash = process.argv[2];
 
+const arrowLength = 330;
+const arrowLengthShort = 260;
+
 const template = new RootTemplate([
 	$.head([
 		$.meta({charset: 'utf-8'}),
@@ -38,7 +41,13 @@ const template = new RootTemplate([
 			$.header([
 				$('#grid-toggle-btn')([i('calendar-day'), use('dice')]),
 				$('#stats-btn')(i('chart-simple')),
-				$.h1(['Shakespear', $.span('dl'), 'e'])
+				$.h1(['Shakespear', $.span('dl'), 'e']),
+				$.svg({viewBox: `0 0 ${arrowLength + 2} 45`}, [
+					$('path#arrow-tail')({d: `M1,19 l4,4 l-4,4 m4,-8 l4,4 l-4,4 m4,-8 l4,4 l-4,4 m4,-8 l4,4 l-4,4 m4,-8 l4,4 l-4,4`}),
+					$('path#arrow-head')({d: `M${arrowLength},23 l-10,-4 l2,4 l-2,4z`}),
+					$('path#arrow-long')({d: `M5,23 L${arrowLength},23`}),
+					$('path#arrow-short')({d: `M5,23 L${arrowLengthShort},23`})
+				]),
 			]),
 			$.main,
 			$.footer

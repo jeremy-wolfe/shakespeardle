@@ -11,6 +11,25 @@
 		width: auto;
 		margin-left: 0;
 	}
+	#container > header {
+		> svg {
+			margin-top: -6px;
+			margin-left: -3px;
+
+			#arrow-tail, #arrow-short {
+				transform: translateX(35px);
+			}
+			#arrow-head {
+				transform: translateX(-35px);
+			}
+			#arrow-long {
+				display: none;
+			}
+			#arrow-short {
+				display: initial;
+			}
+		}
+	}
 }
 
 @media (max-width: 550px) {
@@ -20,6 +39,9 @@
 	}
 }
 @media (max-width: 400px) {
+	#container > header > svg {
+		display: none;
+	}
 	#container > footer {
 		ul {
 			li {
