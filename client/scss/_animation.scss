@@ -41,37 +41,27 @@
 
 @keyframes invalid {
 	0% {
-		color: color.$invalid;
 		transform: translateX(0);
-	}
-
-	5% {
-		color: color.$invalid;
-		transform: translateX(5px);
-	}
-
-	10% {
-		color: color.$invalid;
-		transform: translateX(-5px);
-	}
-
-	15% {
-		color: color.$invalid;
-		transform: translateX(5px);
 	}
 
 	20% {
-		color: color.$invalid;
+		transform: translateX(5px);
+	}
+
+	40% {
 		transform: translateX(-5px);
 	}
 
-	25% {
-		color: color.$invalid;
-		transform: translateX(0);
+	60% {
+		transform: translateX(5px);
+	}
+
+	80% {
+		transform: translateX(-5px);
 	}
 
 	100% {
-		color: color.$foreground;
+		transform: translateX(0);
 	}
 }
 

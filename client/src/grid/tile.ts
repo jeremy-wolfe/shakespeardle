@@ -70,5 +70,6 @@ export class Tile extends Segment {
 		this._value = value?.trim()[0]?.toUpperCase() || '';
 		this.element.innerHTML = this._value;
 		this.row.grid.updateCursor();
+		this.row.checkInvalid();
 	}
 }

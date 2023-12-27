@@ -10,7 +10,7 @@ export class Row extends Segment {
 
 	private readonly animationEnd = () => {
 		this.element.removeEventListener('animationend', this.animationEnd);
-		this.element.classList.remove('invalid');
+		this.element.classList.remove('shake');
 	};
 
 	constructor(public readonly grid: Grid) {
@@ -23,7 +23,7 @@ export class Row extends Segment {
 	private invalid(): void {
 		this.animationEnd();
 		this.element.addEventListener('animationend', this.animationEnd);
-		this.element.classList.add('invalid');
+		this.element.classList.add('shake');
 		navigator.vibrate?.([100, 100, 100]);
 	}
 
@@ -36,6 +36,12 @@ export class Row extends Segment {
 
 	public detach(): void {
 		this.element.classList.remove('animate');
+	}
+
+	public checkInvalid(): void {
+		const {guess} = this;
+		const {word} = this.grid.word;
+		this.element.classList.toggle('invalid', guess.length >= word.length && this.isInvalid);
 	}
 
 	public submit(): void {

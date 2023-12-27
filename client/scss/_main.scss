@@ -40,13 +40,18 @@ main {
 		padding: 2px;
 		border: 1px solid transparent;
 		transform-style: preserve-3d;
+		transition: color 500ms;
 
 		&.complete li:not(.valid-letter):not(.valid-position) {
 			@include color.tileColor(color.$grayMid);
 		}
 
 		&.invalid {
-			animation: invalid 2s;
+			color: color.$invalid;
+
+			&.shake {
+				animation: invalid 500ms;
+			}
 		}
 
 		li {
