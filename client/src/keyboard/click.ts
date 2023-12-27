@@ -1,47 +1,45 @@
 import {App} from '..';
 import {BackspaceKey, EnterKey, Key} from './key';
 
-class ClickSound {
+type Variation = 'Delete' | 'Invalid' | 'Return' | 'Standard';
+
+const audio = new Audio;
+const format = audio.canPlayType('audio/ogg; codecs=vorbis') === 'probably' ? 'ogg' : 'wav';
+
+class ClickSound<V extends Variation> {
+	private readonly file: `Keypress${V}.${typeof format}` = `Keypress${this.variation}.${format}`;
+	private readonly buffer: Promise<AudioBuffer> = this.init();
+
 	constructor(
 		private readonly keyClick: KeyClick,
-		private readonly volume: number,
-		private readonly frequency: [number, number],
-		private readonly duration: number
+		private readonly variation: V
 	) {}
 
-	public play(delay: number = 0): void {
+	private async init(): Promise<AudioBuffer> {
 		const {context} = this.keyClick;
-		const start = context.currentTime + delay;
+		const response = await fetch(`/assets/sounds/${this.file}`);
+		const buffer = await response.arrayBuffer();
+		return context.decodeAudioData(buffer);
+	}
 
-		const gain = context.createGain();
-		const oscillator = context.createOscillator();
-
-		gain.gain.setValueAtTime(0, start);
-		gain.gain.linearRampToValueAtTime(this.volume, start + 0.005);
-		gain.gain.linearRampToValueAtTime(0, start + this.duration);
-
-		oscillator.type = 'sine';
-		oscillator.frequency.setValueAtTime(this.frequency[0], start);
-		oscillator.frequency.linearRampToValueAtTime(this.frequency[1], start + 0.003);
-		oscillator.onended = () => {
-			oscillator.disconnect();
-			gain.disconnect();
-		}
-		
-		oscillator.connect(gain);
-		gain.connect(context.destination);
-		oscillator.start(start);
-		oscillator.stop(start + this.duration);
+	public async play(delay: number = 0): Promise<void> {
+		const {context} = this.keyClick;
+		const source = context.createBufferSource();
+		source.buffer = await this.buffer;
+		source.onended = () => source.disconnect();
+		source.connect(context.destination);
+		source.start(context.currentTime + delay);
 	}
 }
 
 export class KeyClick {
 	public readonly context: AudioContext = new AudioContext();
 	private readonly sounds = {
-		normal: new ClickSound(this, 1, [1400, 200], 0.1),
-		disabled: new ClickSound(this, 0.7, [12000, 3000], 0.005),
-		invalid: new ClickSound(this, 1, [1200, 300], 0.25),
-		submit: new ClickSound(this, 1, [1400, 380], 0.25)
+		normal: new ClickSound(this, 'Standard'),
+		disabled: new ClickSound(this, 'Standard'),
+		invalid: new ClickSound(this, 'Invalid'),
+		submit: new ClickSound(this, 'Return'),
+		backspace: new ClickSound(this, 'Delete')
 	} as const;
 
 	constructor(public readonly app: App) {}
@@ -51,10 +49,10 @@ export class KeyClick {
 			this.sounds.disabled.play();
 		} else if (this.isInvalid(key)) {
 			this.sounds.invalid.play();
-			this.sounds.invalid.play(0.2);
 		} else if (key instanceof EnterKey) {
-			this.sounds.invalid.play();
-			this.sounds.submit.play(0.2);
+			this.sounds.submit.play();
+		} else if (key instanceof BackspaceKey) {
+			this.sounds.backspace.play();
 		} else {
 			this.sounds.normal.play();
 		}
