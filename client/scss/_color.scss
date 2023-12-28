@@ -8,12 +8,15 @@ $validPos:   #094;
 $invalid:    #f00;
 $link:       #afa;
 
+@function glow($color) {
+	@return radial-gradient(circle at bottom, lighten($color, 20%), $color 40%, darken($color, 10%) 70%);
+}
 
 @mixin tileColor($color) {
 	border-color: $color;
 
 	&::before {
-		background: radial-gradient(circle at bottom, lighten($color, 20%), $color 40%, darken($color, 10%) 70%);
+		background: glow($color);
 		opacity: 1;
 	}
 }

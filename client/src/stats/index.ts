@@ -1,5 +1,6 @@
 import {App} from '..';
 import {Chart} from './chart';
+import {Definition} from './definition';
 
 type Fill<N extends number, T extends number = 1, D extends 0[] = [0], L extends number = D['length']> = number & (L extends N ? T | N : Fill<N, L | T, [0, ...D]>);
 export type MaxTries = Fill<App['grid']['tries']>;
@@ -14,6 +15,7 @@ export interface StatData {
 export class Stats {
 	public readonly elements: StatElements;
 	public readonly chart: Chart;
+	public readonly definition: Definition;
 	public played: number = this.data.length;
 	public wins: number = this.data.filter((stat) => stat.win).length;
 	public accuracy: string;
@@ -24,6 +26,7 @@ export class Stats {
 	constructor(public readonly app: App, public readonly data: StatData[]) {
 		this.elements = new StatElements(this);
 		this.chart = new Chart(this);
+		this.definition = new Definition(this);
 		this.recalculate();
 	}
 
@@ -39,6 +42,7 @@ export class Stats {
 		this.longestStreak = Math.max(...this.streaks) || 0;
 		this.elements.update();
 		this.chart.update();
+		this.definition.update();
 	}
 
 	public show(): void {
@@ -113,5 +117,6 @@ class StatElements {
 			this.statItems[i].innerHTML = this.stats[value].toString();
 		});
 		this.share.style.display = this.stats.app.grid.isComplete ? '' : 'none';
+		this.charts.style.display = this.stats.played ? '' : 'none';
 	}
 }

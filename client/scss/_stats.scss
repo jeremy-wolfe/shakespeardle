@@ -40,6 +40,56 @@ aside {
 		}
 	}
 
+	> #definition {
+		padding: var(--padding);
+		background: rgba(mix(color.$grayMid, color.$grayDark), 0.85);
+
+		dfn {
+			position: relative;
+			display: inline-flex;
+			flex-direction: row;
+			align-items: center;
+			margin: 0 0.5rem 0 0;
+			padding: 0;
+			font-style: normal;
+
+			&::after {
+				content: ':';
+				display: block;
+				margin: -0.2rem 0 0 0.25rem;
+			}
+
+			b {
+				position: relative;
+				display: block;
+				width: 1.2em;
+				height: 1.2em;
+				line-height: 1.2em;
+				margin: 0 1px 0 0;
+				font-family: 'Cinzel', serif;
+				font-weight: 600;
+				text-align: center;
+				background: color.$background color.glow(rgba(color.$validPos, 0.5));
+				border: 1px solid color.$background;
+				border-radius: 2px;
+				overflow: hidden;
+				box-shadow: 0 0 12px 1px rgba(color.$validPos, 0.5);
+			}
+		}
+		cite {
+			font-size: 0.75rem;
+			opacity: 0.85;
+
+			&:first-of-type {
+				&::before {
+					content: '—';
+					display: inline;
+					margin: 0 0.25em;
+				}
+			}
+		}
+	}
+
 	> figure {
 		display: flex;
 		flex-direction: row;
@@ -50,7 +100,7 @@ aside {
 		box-sizing: border-box;
 		margin: 0;
 		padding: var(--padding);
-		background: rgba(mix(color.$grayMid, color.$grayDark), 0.85);
+		background: rgba(color.$grayDark, 0.85);
 
 		@mixin segment($n, $color) {
 			svg circle:nth-of-type(#{$n}) {
@@ -126,7 +176,7 @@ aside {
 
 	> footer {
 		padding: var(--padding);
-		background: rgba(color.$grayDark, 0.85);
+		background: rgba(mix(color.$grayDark, color.$background), 0.85);
 
 		> div {
 			display: flex;

@@ -63,6 +63,7 @@ const template = new RootTemplate([
 					$.li([$.b, 'best streak'])
 				])
 			]),
+			$('#definition'),
 			$.figure([$.h2('Guess Distribution')]),
 			$.footer([
 				$.div([
@@ -73,12 +74,14 @@ const template = new RootTemplate([
 					$('.btn.share')([i('share-nodes'), 'Share'])
 				]),
 				$.small([
-					'This project is licensed under the terms of the ',
-					$.a({href: 'https://github.com/jeremy-wolfe/shakespeardle/blob/main/LICENSE.txt', target: '_blank'}, 'Mozilla Public License 2.0'),
+					'This project is licensed under the ',
+					$.a({href: 'https://github.com/jeremy-wolfe/shakespeardle/blob/main/LICENSE.txt', target: '_blank', title: 'Mozilla Public License 2.0'}, 'MPL-2.0'),
 					'. Concept and rules based on ',
 					$.a({href: 'https://www.nytimes.com/games/wordle/index.html', target: '_blank'}, 'Wordle'),
 					'. Word list compiled from ', $.i('Shakespeare’s Plays, Sonnets and Poems'), ' from ',
-					$.a({href: 'https://shakespeare.folger.edu/', target: '_blank'}, 'The Folger Shakespeare'), '.'
+					$.a({href: 'https://shakespeare.folger.edu/', target: '_blank'}, 'The Folger Shakespeare'),
+					'. Definitions from ', $.i('A Shakespeare Glossary'), ' by C. T. Onions, via ',
+					$.a({href: 'https://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A1999.03.0068', target: '_blank'}, 'Perseus Digital Library'), '.'
 				])
 			])
 		]),
