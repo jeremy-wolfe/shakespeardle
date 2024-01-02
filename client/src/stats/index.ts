@@ -83,11 +83,12 @@ export class Stats {
 class StatElements {
 	public readonly main: HTMLElement = document.querySelector('body > aside');
 	public readonly shade: HTMLDivElement = document.getElementById('shade') as HTMLDivElement;
+	public readonly inner: HTMLDivElement = this.main.querySelector('#stats');
 	public readonly close: HTMLDivElement = this.main.querySelector('.close');
 	public readonly statItems: HTMLLIElement[] = Array.from(this.main.querySelectorAll('ul > li > b'));
 	public readonly button: HTMLDivElement = document.getElementById('stats-btn') as HTMLDivElement;
-	public readonly share: HTMLDivElement = this.main.querySelector('.btn.share');
-	public readonly charts: HTMLDivElement = this.main.querySelector('figure') as HTMLDivElement;
+	public readonly share: HTMLDivElement = this.inner.querySelector('.btn.share');
+	public readonly charts: HTMLDivElement = this.inner.querySelector('figure') as HTMLDivElement;
 
 	constructor(private readonly stats: Stats) {
 		this.button.addEventListener('click', () => {
