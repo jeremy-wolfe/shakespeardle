@@ -23,7 +23,7 @@ echo
 echo 'HTML'
 cd "$DIR/static-template"
 [ -d 'node_modules' ] || npm i
-npx tsc -b && node dist "$HASH" > "$DIR/dist/index.html"
+npx tsc -b && npx whits "dist" "$DIR/dist" "{\"hash\": \"$HASH\"}"
 
 echo
 echo 'Webpack'

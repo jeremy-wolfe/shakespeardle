@@ -1,14 +1,13 @@
-import {$, RootTemplate, comment, css, raw} from '@elevensolutions/htts';
+import {$, RootTemplate, comment, css, raw} from 'whits';
 import {readFileSync} from 'fs';
 import {i, symbol, use} from './icons.js';
 
 const attribution = readFileSync('node_modules/@fortawesome/fontawesome-svg-core/attribution.js').toString().replace(/.*`(.*)`.*/s, '$1');
-const hash = process.argv[2];
 
 const arrowLength = 330;
 const arrowLengthShort = 260;
 
-const template = new RootTemplate([
+export default new RootTemplate<{hash: string}>(({hash}) => [
 	$.head([
 		$.meta({charset: 'utf-8'}),
 		$.meta({name: 'viewport', content: 'width=device-width, initial-scale=1'}),
@@ -99,5 +98,3 @@ const template = new RootTemplate([
 		raw`\n\n`
 	])
 ]);
-
-console.log(template.renderString());

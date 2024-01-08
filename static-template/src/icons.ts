@@ -1,4 +1,4 @@
-import {$, RawContent, Tag, raw} from '@elevensolutions/htts';
+import {$, RawContent, Tag, raw} from 'whits';
 import {IconName, IconPrefix, icon, library, toHtml} from '@fortawesome/fontawesome-svg-core';
 import {faCalendarDay, faChartSimple, faCircleCheck, faDeleteLeft, faDice, faShareNodes} from '@fortawesome/free-solid-svg-icons';
 import {faGithub} from '@fortawesome/free-brands-svg-icons';
